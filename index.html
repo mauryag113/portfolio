@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sachin Maurya - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Nav link hover effect */
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #38b2ac;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    /* Card hover effect */
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    /* Typewriter effect */
+    .typewriter {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 0.15em solid white;
+      white-space: nowrap;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: white; }
+    }
+    /* Back to top button */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #38b2ac;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50%;
+      display: none;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    #back-to-top:hover {
+      opacity: 0.8;
+    }
+    /* Subtle background pattern */
+    .pattern-bg {
+      background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.02) 75%, transparent 75%, transparent);
+      background-size: 20px 20px;
+    }
+    /* Form success message */
+    #form-message {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-2xl font-bold text-teal-500">Sachin Maurya</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+          <a href="#home" class="nav-link text-gray-600 hover:text-teal-500">Home</a>
+          <a href="#about" class="nav-link text-gray-600 hover:text-teal-500">About</a>
+          <a href="#skills" class="nav-link text-gray-600 hover:text-teal-500">Skills</a>
+          <a href="#experience" class="nav-link text-gray-600 hover:text-teal-500">Experience</a>
+          <a href="#projects" class="nav-link text-gray-600 hover:text-teal-500">Projects</a>
+          <a href="#contact" class="nav-link text-gray-600 hover:text-teal-500">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+    <div class="absolute inset-0 bg-black opacity-20"></div> <!-- Overlay -->
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+      <!-- Profile Photo -->
+      <img src="C:\Users\maury\Downloads\PO\dp.jpg" alt="Sachin Maurya" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-lg"> +
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome, I'm Sachin Maurya</h2>
+      <p class="text-xl md:text-2xl mb-6 typewriter">B.Tech. CSE (AI) | Machine Learning Engineer | Data Scientist</p>
+      <p class="text-lg max-w-2xl mx-auto mb-8">Passionate about building AI-driven solutions for predictive maintenance, medical image analysis, and generative modeling.</p>
+      <div class="space-x-4">
+        <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" class="inline-block bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600">View LinkedIn</a>
+        <a href="Resume _sachin mauryaa .pdf" target="_blank" class="inline-block bg-white text-teal-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">Download Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">About Me</h2>
+      <div class="flex flex-col md:flex-row items-center gap-8 fade-in">
+        <div class="md:w-1/2">
+          <p class="text-lg">I'm a B.Tech. (Hons) CSE student specializing in Artificial Intelligence at Chhattisgarh Swami Vivekanand Technical University (CGPA: 7.5). With hands-on experience in data science and machine learning, I focus on predictive maintenance, generative modeling, and medical image analysis. My work includes developing a digital twin for centrifugal pumps and a CNN-based MRI classifier for brain tumor detection. Proficient in Python, TensorFlow, and end-to-end ML pipelines, I aim to create impactful AI solutions.</p>
+        </div>
+        <div class="md:w-1/2">
+          <h3 class="text-xl font-semibold mb-4">Education</h3>
+          <ul class="space-y-4">
+            <li>
+              <p class="font-medium">B.Tech. CSE (AI), CSVTU, Bhilai</p>
+              <p class="text-gray-600">2022 - Present | CGPA: 7.5</p>
+            </li>
+            <li>
+              <p class="font-medium">12th, Holy Angels Public School (CBSE)</p>
+              <p class="text-gray-600">2021 | 75%</p>
+            </li>
+            <li>
+              <p class="font-medium">10th, S.B.T Public School (CBSE)</p>
+              <p class="text-gray-600">2019 | 80%</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-16 pattern-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Skills</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Programming & Libraries</h3>
+          <p>Python (NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, TensorFlow, OpenCV), SQL, R</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Core Concepts</h3>
+          <p>Statistics, Data Structures, Machine Learning, Deep Learning (CNN, GAN, LSTM)</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Data Handling</h3>
+          <p>Data Manipulation, Data Scraping, Data Visualization</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Tools & Platforms</h3>
+          <p>MATLAB, Tableau, Google Colab, Git</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Cloud Computing</h3>
+          <p>Google Cloud Platform (Firebase), AWS (basic)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Experience</h2>
+      <div class="space-y-12">
+        <div class="card fade-in">
+          <h3 class="text-2xl font-semibold text-teal-600">Digital Twin of Centrifugal Pump (NSTL-DRDO) | IIT Roorkee</h3>
+          <p class="text-gray-600">2023</p>
+          <ul class="list-disc list-inside mt-4 space-y-2">
+            <li>Collaborated on predictive maintenance using AI/ML techniques.</li>
+            <li>Trained models with Random Forest, XGBoost, and LSTM for time-series forecasting.</li>
+            <li>Developed a live simulation dashboard for real-time pump performance and failure prediction.</li>
+            <li>Reduced unplanned downtime in defense applications.</li>
+          </ul>
+        </div>
+        <div class="card fade-in">
+          <h3 class="text-2xl font-semibold text-teal-600">Data Scientist | Quick CURD</h3>
+          <p class="text-gray-600">2023</p>
+          <ul class="list-disc list-inside mt-4 space-y-2">
+            <li>Framed real-world ML problems and mastered the end-to-end ML workflow.</li>
+            <li>Focused on feature clarity, data consistency, and domain alignment.</li>
+            <li>Developed scalable AI solutions for dynamic use cases.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-16 pattern-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold text-teal-600">Remaining Useful Life (RUL) of Pump Components | IIT Roorkee</h3>
+          <p class="mt-2">Developed ML algorithms to estimate RUL of centrifugal pump components with real-time health monitoring.</p>
+          <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold text-teal-600">Human Induced Load (GAN) | IIT Roorkee</h3>
+          <p class="mt-2">Designed a GAN-based model to calculate human-induced load using W-GAN and W-GAN-GP for stability.</p>
+          <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold text-teal-600">Human Activity Recognition (HAR) | IIT Gandhi Nagar</h3>
+          <p class="mt-2">Built a model using UCI HAR dataset, achieving 99.7% accuracy in classifying activities.</p>
+          <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
+          <h3 class="text-xl font-semibold text-teal-600">Brain Cancer Detection | CSVTU</h3>
+          <p class="mt-2">Developed a CNN-based model for brain cancer detection using MRI images, achieving 99.5% accuracy.</p>
+          <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Contact</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="fade-in">
+          <h3 class="text-2xl font-semibold mb-4 text-teal-600">Get in Touch</h3>
+          <p class="mb-2">Email: <a href="mailto:Mauryag7878@gmail.com" class="text-teal-500 hover:underline">Mauryag7878@gmail.com</a></p>
+          <p class="mb-2">Phone: <a href="tel:+918528187710" class="text-teal-500 hover:underline">+91 8528187710</a></p>
+          <p class="mt-4">
+            <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" class="text-teal-500 hover:underline">LinkedIn</a> | 
+            <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline">GitHub</a>
+          </p>
+        </div>
+        <div class="fade-in">
+          <h3 class="text-2xl font-semibold mb-4 text-teal-600">Send a Message</h3>
+          <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-4">
+            <div>
+              <label for="name" class="block text-sm font-medium">Name</label>
+              <input type="text" id="name" name="name" class="w-full p-2 border rounded-lg focus:ring-teal-500 focus:border-teal-500" placeholder="Your Name" required>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium">Email</label>
+              <input type="email" id="email" name="email" class="w-full p-2 border rounded-lg focus:ring-teal-500 focus:border-teal-500" placeholder="Your Email" required>
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium">Message</label>
+              <textarea id="message" name="message" class="w-full p-2 border rounded-lg focus:ring-teal-500 focus:border-teal-500" rows="4" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="bg-teal-500 text-white px-6 py-2 rounded-lg hover:bg-teal-600">Send</button>
+          </form>
+          <p id="form-message">Thank you! Your message has been sent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-gray-600">© 2025 Sachin Maurya. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" title="Back to Top">↑</button>
+
+  <!-- JavaScript for interactivity -->
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Fade-in animation on scroll
+    const fadeIns = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeIns.forEach(element => observer.observe(element));
+
+    // Form submission handling with Formspree
+    const form = document.getElementById('contact-form');
+    const formMessage = document.getElementById('form-message');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          form.reset();
+          formMessage.style.display = 'block';
+          setTimeout(() => {
+            formMessage.style.display = 'none';
+          }, 5000);
+        } else {
+          alert('There was an error sending your message. Please try again later.');
+        }
+      } catch (error) {
+        alert('There was an error sending your message. Please try again later.');
+      }
+    });
+
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
