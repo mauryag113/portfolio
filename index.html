@@ -1,3 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sachin Maurya - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom animations */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    html { scroll-behavior: smooth; }
+    .nav-link { position: relative; transition: color 0.3s ease; }
+    .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #38b2ac; transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
+    .typewriter { display: inline-block; overflow: hidden; border-right: 0.15em solid white; white-space: nowrap; animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite; }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: white; } }
+    #back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: #38b2ac; color: white; padding: 10px 15px; border-radius: 50%; display: none; cursor: pointer; transition: opacity 0.3s ease; }
+    #back-to-top:hover { opacity: 0.8; }
+    .pattern-bg { background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.02) 75%, transparent 75%, transparent); background-size: 20px 20px; }
+    #form-message { display: none; margin-top: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: #d1fae5; color: #065f46; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-2xl font-bold text-teal-500">Sachin Maurya</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+          <a href="#home" class="nav-link text-gray-600 hover:text-teal-500">Home</a>
+          <a href="#about" class="nav-link text-gray-600 hover:text-teal-500">About</a>
+          <a href="#skills" class="nav-link text-gray-600 hover:text-teal-500">Skills</a>
+          <a href="#experience" class="nav-link text-gray-600 hover:text-teal-500">Experience</a>
+          <a href="#projects" class="nav-link text-gray-600 hover:text-teal-500">Projects</a>
+          <a href="#achievements" class="nav-link text-gray-600 hover:text-teal-500">Achievements</a>
+          <a href="#gallery" class="nav-link text-gray-600 hover:text-teal-500">Gallery</a>
+          <a href="#contact" class="nav-link text-gray-600 hover:text-teal-500">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+      <img src="dp.jpg" alt="Sachin Maurya" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-lg">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome, I'm Sachin Maurya</h2>
+      <p class="text-xl md:text-2xl mb-6 typewriter">B.Tech. CSE (AI) | Machine Learning Engineer | Data Scientist</p>
+      <p class="text-lg max-w-2xl mx-auto mb-8">Passionate about building AI-driven solutions for predictive maintenance, medical image analysis, and generative modeling.</p>
+      <div class="space-x-4">
+        <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" class="inline-block bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600">View LinkedIn</a>
+        <a href="SACHIN_Maurya_resume.pdf" target="_blank" class="inline-block bg-white text-teal-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">Download Resume</a>
+      </div>
+    </div>
+  </section>
 <!-- About Section -->
   <section id="about" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -152,36 +215,6 @@
   </div>
 </section>
 
-<!-- Achievements & Certifications Section -->
-<section id="achievements" class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center mb-12 fade-in">Achievements & Certifications</h2>
-    <ul class="list-disc list-inside space-y-3 text-lg fade-in">
-      <li>📜 LORs from two Professors at <strong>IIT Roorkee</strong>.</li>
-      <li>⭐ 5 Stars in <strong>Python</strong> & ⭐⭐ 4 Stars in <strong>SQL</strong> on HackerRank.</li>
-      <li>🎓 Python for Data Science – IBM SkillsBuild.</li>
-      <li>🎓 Machine Learning with AI – Internshala & NSDC.</li>
-      <li>🎓 Build Classical Machine Learning Models – Microsoft Learn.</li>
-      <li>🎓 Introduction to Machine Learning – Microsoft Learn.</li>
-      <li>🎓 Overview of Data Tools & Languages – IBM SkillsBuild.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- Gallery Section -->
-<section id="gallery" class="py-16 pattern-bg">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center mb-12 fade-in">📸 Gallery – Certificates & Achievements</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 fade-in">
-      <div class="bg-white p-4 rounded-lg shadow-md card">
-        <img src="images/certificates/ibm_datascience.png" alt="IBM Certificate" class="rounded-lg w-full h-64 object-cover">
-        <p class="mt-2 text-center font-medium">IBM – Python for Data Science</p>
-      </div>
-      <!-- Add more certificates here -->
-    </div>
-  </div>
-</section>
-
 
   <!-- Contact Section -->
   <section id="contact" class="py-16 bg-white">
@@ -219,3 +252,113 @@
       </div>
     </div>
   </section>
+  <!-- About Section -->
+  <!-- (Your provided About Section goes here exactly as you wrote it) -->
+
+  <!-- Skills Section -->
+  <!-- (Your provided Skills Section goes here exactly as you wrote it) -->
+
+  <!-- Experience Section -->
+  <!-- (Your provided Experience Section goes here exactly as you wrote it) -->
+
+  <!-- Projects Section -->
+  <!-- (Your provided Projects Section goes here exactly as you wrote it) -->
+
+  <!-- Achievements & Certifications Section -->
+  <section id="achievements" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Achievements & Certifications</h2>
+      <ul class="list-disc list-inside space-y-3 text-lg fade-in">
+        <li>📜 LORs from two Professors at <strong>IIT Roorkee</strong>.</li>
+        <li>⭐ 5 Stars in <strong>Python</strong> & ⭐⭐ 4 Stars in <strong>SQL</strong> on HackerRank.</li>
+        <li>🎓 Python for Data Science – IBM SkillsBuild.</li>
+        <li>🎓 Machine Learning with AI – Internshala & NSDC.</li>
+        <li>🎓 Build Classical Machine Learning Models – Microsoft Learn.</li>
+        <li>🎓 Introduction to Machine Learning – Microsoft Learn.</li>
+        <li>🎓 Overview of Data Tools & Languages – IBM SkillsBuild.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-16 pattern-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12 fade-in">📸 Gallery – Certificates & Achievements</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 fade-in">
+        <div class="bg-white p-4 rounded-lg shadow-md card">
+          <img src="images/certificates/ibm_datascience.png" alt="IBM Certificate" class="rounded-lg w-full h-64 object-cover">
+          <p class="mt-2 text-center font-medium">IBM – Python for Data Science</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card">
+          <img src="images/certificates/internshala_ml.png" alt="Internshala Certificate" class="rounded-lg w-full h-64 object-cover">
+          <p class="mt-2 text-center font-medium">Internshala – ML with AI</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card">
+          <img src="images/certificates/hackerrank_python.png" alt="HackerRank Python" class="rounded-lg w-full h-64 object-cover">
+          <p class="mt-2 text-center font-medium">HackerRank – Python (5⭐)</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card">
+          <img src="images/certificates/hackerrank_sql.png" alt="HackerRank SQL" class="rounded-lg w-full h-64 object-cover">
+          <p class="mt-2 text-center font-medium">HackerRank – SQL (4⭐)</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card">
+          <img src="images/certificates/microsoft_ml.png" alt="Microsoft ML" class="rounded-lg w-full h-64 object-cover">
+          <p class="mt-2 text-center font-medium">Microsoft – ML Certifications</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card">
+          <img src="images/certificates/lor_iit1.png" alt="LOR IIT" class="rounded-lg w-full h-64 object-cover">
+          <p class="mt-2 text-center font-medium">LOR – IIT Roorkee</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <!-- (Your provided Contact Section goes here exactly as you wrote it) -->
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-gray-600">© 2025 Sachin Maurya. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" title="Back to Top">↑</button>
+
+  <!-- JavaScript -->
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    // Fade-in on scroll
+    const fadeIns = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeIns.forEach(element => observer.observe(element));
+    // Form submission
+    const form = document.getElementById('contact-form');
+    const formMessage = document.getElementById('form-message');
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        try {
+          const response = await fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+          if (response.ok) { form.reset(); formMessage.style.display = 'block'; setTimeout(() => { formMessage.style.display = 'none'; }, 5000); }
+          else alert('Error sending message. Please try again later.');
+        } catch (error) { alert('Error sending message. Please try again later.'); }
+      });
+    }
+    // Back to top
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => { backToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+    backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  </script>
+</body>
+</html>
