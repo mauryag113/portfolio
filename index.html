@@ -1,400 +1,862 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sachin Maurya - Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Custom animations */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-    html { scroll-behavior: smooth; }
-    .nav-link { position: relative; transition: color 0.3s ease; }
-    .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #38b2ac; transition: width 0.3s ease; }
-    .nav-link:hover::after { width: 100%; }
-    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
-    .typewriter { display: inline-block; overflow: hidden; border-right: 0.15em solid white; white-space: nowrap; animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite; }
-    @keyframes typing { from { width: 0; } to { width: 100%; } }
-    @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: white; } }
-    #back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: #38b2ac; color: white; padding: 10px 15px; border-radius: 50%; display: none; cursor: pointer; transition: opacity 0.3s ease; }
-    #back-to-top:hover { opacity: 0.8; }
-    .pattern-bg { background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.02) 75%, transparent 75%, transparent); background-size: 20px 20px; }
-    #form-message { display: none; margin-top: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: #d1fae5; color: #065f46; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sachin Maurya — AI / ML Engineer</title>
+<meta name="description" content="Sachin Maurya — AI/ML Engineer specializing in predictive maintenance, medical imaging and generative modeling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --bg:            #FAF9F5;
+    --bg-alt:        #F2EFE7;
+    --surface:       #FFFFFF;
+    --ink:           #191B20;
+    --ink-muted:     #5B6270;
+    --ink-dim:       #8A8F99;
+    --line:          #E2DED2;
+    --line-strong:   #CFC9B8;
+    --navy:          #16233F;
+    --navy-soft:     #2C3C5E;
+    --gold:          #8A6A2F;
+    --gold-soft:     #B08B45;
+    --font-display:  'Fraunces', serif;
+    --font-mono:     'IBM Plex Mono', monospace;
+    --font-body:     'Inter', sans-serif;
+    --maxw:          1180px;
+    --radius:        10px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--navy); color:#fff; }
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+  ::-webkit-scrollbar-thumb{ background:var(--line-strong); border-radius:8px; }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  ul{ margin:0; padding:0; list-style:none; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:3px; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:16px;
+  }
+  .eyebrow .idx{ color:var(--ink-dim); font-weight:500; }
+  .eyebrow .rule{ flex:1; max-width:60px; height:1px; background:var(--line-strong); }
+
+  h1,h2,h3,h4{ font-family:var(--font-display); margin:0; letter-spacing:-0.01em; color:var(--navy); }
+  .section-title{
+    font-size:clamp(1.9rem, 3vw, 2.5rem);
+    font-weight:500;
+    margin-bottom:48px;
+    font-style:normal;
+  }
+  section{ padding:120px 0; position:relative; }
+  .section-alt{ background:var(--bg-alt); }
+  .section-alt.hairline{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  [data-reveal]{ opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease; }
+  [data-reveal].is-visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+
+  /* ============ NAV ============ */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(250,249,245,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:78px; }
+  .logo{
+    font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--navy);
+  }
+  .logo em{ font-style:italic; color:var(--gold); font-weight:400; }
+
+  .nav-links{ display:flex; align-items:center; gap:38px; }
+  .nav-links a{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-muted); position:relative; padding:6px 0; transition:color .2s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--gold); transition:width .25s ease;
+  }
+  .nav-links a:hover{ color:var(--navy); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff !important; background:var(--navy); padding:10px 20px; border-radius:4px;
+  }
+  .nav-cta::after{ display:none; }
+  .nav-cta:hover{ background:var(--gold-soft); color:#fff; }
+
+  .burger{ display:none; background:none; border:1px solid var(--line-strong); border-radius:6px; width:42px; height:38px; cursor:pointer; }
+  .burger span{ display:block; width:18px; height:1.5px; background:var(--navy); margin:4px auto; }
+
+  .mobile-menu{
+    display:none; position:fixed; inset:78px 0 0 0; background:var(--bg);
+    z-index:99; padding:34px 32px; flex-direction:column; gap:24px;
+  }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ font-family:var(--font-mono); font-size:1rem; letter-spacing:.05em; text-transform:uppercase; color:var(--navy); }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:150px 0 120px;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    background-position:center -1px;
+    -webkit-mask-image:linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    mask-image:linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:1.15fr .85fr; gap:64px; align-items:center;
+  }
+  .kicker{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold);
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:26px;
+    border:1px solid var(--line-strong); padding:7px 14px; border-radius:100px; background:var(--surface);
+  }
+  .kicker .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); }
+
+  .hero h1{ font-size:clamp(2.3rem, 4.6vw, 3.6rem); font-weight:600; line-height:1.12; }
+  .hero h1 em{ font-style:italic; color:var(--gold); font-weight:500; }
+  .role-line{
+    font-family:var(--font-mono); font-size:clamp(.85rem,1.3vw,1rem); letter-spacing:.04em; text-transform:uppercase;
+    color:var(--ink-muted); margin:24px 0 22px; min-height:1.6em;
+  }
+  .role-line .cursor{ display:inline-block; width:2px; height:1em; background:var(--gold); vertical-align:-1px; animation:blink 1s step-end infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .hero p.lede{ font-size:1.06rem; color:var(--ink-muted); max-width:54ch; margin-bottom:36px; }
+
+  .btn-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--font-mono); font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; font-weight:500;
+    padding:14px 26px; border-radius:5px; display:inline-flex; align-items:center; gap:10px;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    border:1px solid transparent; cursor:pointer;
+  }
+  .btn-primary{ background:var(--navy); color:#fff; }
+  .btn-primary:hover{ background:var(--gold-soft); transform:translateY(-2px); }
+  .btn-ghost{ border-color:var(--line-strong); color:var(--navy); background:var(--surface); }
+  .btn-ghost:hover{ border-color:var(--navy); transform:translateY(-2px); }
+
+  /* figure / dashboard card */
+  .dash{
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius);
+    box-shadow:0 24px 48px -24px rgba(22,35,63,.18);
+    overflow:hidden;
+  }
+  .dash-bar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px; border-bottom:1px solid var(--line); background:var(--bg-alt);
+  }
+  .dash-bar .fn{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.03em; color:var(--ink-muted); }
+  .dash-bar .live{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:6px; }
+  .dash-bar .live .dot{ width:5px; height:5px; border-radius:50%; background:var(--gold); }
+  .dash-body{ padding:24px 22px 8px; }
+  .dash-stats{ display:flex; gap:26px; margin-bottom:18px; }
+  .stat .label{ font-family:var(--font-mono); font-size:.65rem; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; }
+  .stat .value{ font-family:var(--font-mono); font-size:1.3rem; font-weight:600; color:var(--navy); margin-top:2px; }
+  #loss-canvas{ width:100%; height:140px; display:block; }
+  .dash-foot{ padding:12px 22px 18px; font-family:var(--font-mono); font-size:.68rem; color:var(--ink-dim); border-top:1px solid var(--line); }
+
+  /* ============ ABOUT ============ */
+  .about-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:64px; }
+  .about-text p{ color:var(--ink-muted); font-size:1.04rem; max-width:64ch; }
+  .about-text p + p{ margin-top:16px; }
+  .edu-list li{ padding:20px 0; border-bottom:1px solid var(--line); }
+  .edu-list li:first-child{ padding-top:0; }
+  .edu-list li:last-child{ border-bottom:none; }
+  .edu-list .deg{ font-weight:600; font-size:1rem; margin-bottom:5px; color:var(--ink); font-family:var(--font-body); }
+  .edu-list .meta{ font-family:var(--font-mono); font-size:.74rem; letter-spacing:.03em; color:var(--ink-dim); text-transform:uppercase; }
+  .col-h{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+
+  /* ============ SKILLS ============ */
+  .skills-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .skill-card{ background:var(--surface); padding:30px; }
+  .skill-card h3{ font-size:1.02rem; margin-bottom:16px; color:var(--navy); font-weight:600; font-family:var(--font-body); }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-family:var(--font-mono); font-size:.7rem; letter-spacing:.02em; color:var(--ink-muted);
+    background:var(--bg-alt); border:1px solid var(--line); padding:5px 10px; border-radius:4px;
+  }
+
+  /* ============ EXPERIENCE ============ */
+  .timeline{ position:relative; padding-left:36px; }
+  .timeline::before{ content:''; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:var(--line-strong); }
+  .tl-item{ position:relative; padding-bottom:52px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:''; position:absolute; left:-36px; top:6px; width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--gold);
+  }
+  .tl-item h3{ font-size:1.3rem; font-weight:600; }
+  .tl-item .role-meta{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-dim); margin:8px 0 16px; }
+  .tl-item ul{ display:grid; gap:11px; }
+  .tl-item li{ color:var(--ink-muted); padding-left:20px; position:relative; }
+  .tl-item li::before{ content:'—'; position:absolute; left:0; color:var(--gold); }
+
+  /* ============ PROJECTS ============ */
+  .proj-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .proj-card{
+    background:var(--surface); padding:30px; display:flex; flex-direction:column; transition:background .2s ease;
+  }
+  .proj-card:hover{ background:var(--bg-alt); }
+  .proj-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:12px; }
+  .proj-top h3{ font-size:1.06rem; font-weight:600; font-family:var(--font-body); color:var(--ink); }
+  .proj-badge{
+    font-family:var(--font-mono); font-size:.64rem; letter-spacing:.03em; white-space:nowrap; color:var(--navy);
+    border:1px solid var(--line-strong); padding:4px 9px; border-radius:100px; background:var(--bg-alt);
+  }
+  .proj-card p{ color:var(--ink-muted); font-size:.93rem; flex-grow:1; margin-bottom:20px; }
+  .proj-link{
+    font-family:var(--font-mono); font-size:.74rem; letter-spacing:.04em; text-transform:uppercase; color:var(--gold);
+    border-bottom:1px solid transparent; display:inline-flex; width:fit-content;
+  }
+  .proj-link:hover{ border-color:var(--gold); }
+
+  /* ============ ACHIEVEMENTS ============ */
+  .log{ border-top:1px solid var(--line); }
+  .log-line{
+    display:grid; grid-template-columns:160px 1fr; gap:24px;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .log-time{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-dim); }
+  .log-msg{ font-size:.98rem; color:var(--ink); }
+  .log-msg b{ color:var(--navy); font-weight:600; }
+
+  /* ============ GALLERY ============ */
+  .gallery-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .gcard{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; transition:box-shadow .25s ease, transform .25s ease;
+  }
+  .gcard:hover{ transform:translateY(-3px); box-shadow:0 20px 40px -22px rgba(22,35,63,.22); }
+  .gcard .thumb{
+    position:relative; width:100%; height:190px; overflow:hidden;
+    background:var(--bg-alt); display:flex; align-items:center; justify-content:center;
+  }
+  .gcard .thumb img{ width:100%; height:100%; object-fit:cover; }
+  .gcard .thumb .ph{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-dim); text-align:center; padding:0 16px; }
+  .gcard .cap{ padding:14px 16px; font-size:.82rem; letter-spacing:.02em; color:var(--ink-muted); font-family:var(--font-mono); border-top:1px solid var(--line); }
+
+  /* ============ CONTACT ============ */
+  .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; }
+  .contact-item{ display:flex; align-items:center; gap:14px; margin-bottom:18px; font-size:.98rem; }
+  .contact-item .ic{
+    width:38px; height:38px; border-radius:6px; background:var(--surface); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; color:var(--gold); font-family:var(--font-mono); font-size:.82rem;
+  }
+  .contact-item a:hover{ color:var(--gold); }
+  .social-row{ display:flex; gap:12px; margin-top:28px; }
+  .social-row a{
+    font-family:var(--font-mono); font-size:.74rem; letter-spacing:.04em; text-transform:uppercase;
+    border:1px solid var(--line-strong); padding:10px 18px; border-radius:5px; color:var(--ink-muted); transition:.2s ease;
+  }
+  .social-row a:hover{ color:var(--navy); border-color:var(--navy); }
+
+  .form-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:32px; }
+  .field{ margin-bottom:20px; }
+  .field label{ font-family:var(--font-mono); font-size:.7rem; color:var(--ink-dim); display:block; margin-bottom:9px; text-transform:uppercase; letter-spacing:.06em; }
+  .field input, .field textarea{
+    width:100%; background:var(--bg); border:1px solid var(--line-strong); border-radius:5px;
+    padding:12px 14px; color:var(--ink); font-family:var(--font-body); font-size:.95rem; resize:vertical;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--navy); }
+  .submit-btn{ width:100%; justify-content:center; border:none; }
+  #form-message{
+    display:none; margin-top:18px; padding:13px 16px; border-radius:5px;
+    background:var(--bg-alt); border:1px solid var(--line-strong); color:var(--navy);
+    font-family:var(--font-mono); font-size:.8rem;
+  }
+
+  /* ============ FOOTER ============ */
+  footer{ border-top:1px solid var(--line); padding:36px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  footer p{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.03em; color:var(--ink-dim); }
+
+  #back-to-top{
+    position:fixed; bottom:28px; right:28px; width:44px; height:44px; border-radius:50%;
+    background:var(--navy); color:#fff; border:none; cursor:pointer; display:none;
+    align-items:center; justify-content:center; font-size:1rem; z-index:80;
+    box-shadow:0 12px 24px rgba(22,35,63,.28);
+  }
+  #back-to-top:hover{ background:var(--gold-soft); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:980px){
+    .nav-links{ display:none; }
+    .burger{ display:block; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:repeat(2,1fr); }
+    .proj-grid{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:640px){
+    section{ padding:76px 0; }
+    .hero{ padding:120px 0 76px; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:1fr; }
+    .dash-stats{ flex-wrap:wrap; gap:18px; }
+    .log-line{ grid-template-columns:1fr; gap:6px; }
+  }
+</style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body>
 
-  <!-- Navigation -->
-  <nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <h1 class="text-2xl font-bold text-teal-500">Sachin Maurya</h1>
-        </div>
-        <div class="flex items-center space-x-6">
-          <a href="#home" class="nav-link text-gray-600 hover:text-teal-500">Home</a>
-          <a href="#about" class="nav-link text-gray-600 hover:text-teal-500">About</a>
-          <a href="#skills" class="nav-link text-gray-600 hover:text-teal-500">Skills</a>
-          <a href="#experience" class="nav-link text-gray-600 hover:text-teal-500">Experience</a>
-          <a href="#projects" class="nav-link text-gray-600 hover:text-teal-500">Projects</a>
-          <a href="#achievements" class="nav-link text-gray-600 hover:text-teal-500">Achievements</a>
-          <a href="#gallery" class="nav-link text-gray-600 hover:text-teal-500">Gallery</a>
-          <a href="#contact" class="nav-link text-gray-600 hover:text-teal-500">Contact</a>
-        </div>
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <div class="logo">Sachin <em>Maurya</em></div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker"><span class="dot"></span> Open to full-time AI/ML roles</div>
+      <h1>Building AI systems that <em>learn, detect, and predict.</em></h1>
+      <div class="role-line">&mdash; <span id="role-text"></span><span class="cursor"></span></div>
+      <p class="lede">B.Tech CSE (AI) engineer focused on predictive maintenance, medical image analysis and generative modeling — turning raw sensor and imaging data into deployed, decision-ready models.</p>
+      <div class="btn-row">
+        <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" rel="noopener" class="btn btn-primary">View LinkedIn ↗</a>
+        <a href="AI_Ml_Engineer.pdf" target="_blank" class="btn btn-ghost">Download Résumé</a>
       </div>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="relative min-h-screen flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-    <div class="absolute inset-0 bg-black opacity-20"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
-      <img src="dp.jpg" alt="Sachin Maurya" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-lg">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome, I'm Sachin Maurya</h2>
-      <p class="text-xl md:text-2xl mb-6 typewriter">B.Tech. CSE (AI) | AI Engineer | Machine Learning Engineer | Data Science Engineer |Computer Vision|Generative AI| Agenticc AI|Cloud AI Engineer </p>
-      <p class="text-lg max-w-2xl mx-auto mb-8">Passionate about building AI-driven solutions for predictive maintenance, medical image analysis, and generative modeling.</p>
-      <div class="space-x-4">
-        <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" class="inline-block bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600">View LinkedIn</a>
-        <a href="AI_Ml_Engineer.pdf" target="_blank" class="inline-block bg-white text-teal-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">Download Resume</a>
+    <div class="dash" data-reveal>
+      <div class="dash-bar">
+        <span class="fn">Fig. 01 — Training convergence</span>
+        <span class="live"><span class="dot"></span>Live</span>
       </div>
-    </div>
-  </section>
-<!-- About Section -->
-  <section id="about" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12 fade-in">About Me</h2>
-      <div class="flex flex-col md:flex-row items-center gap-8 fade-in">
-        <div class="md:w-1/2">
-          <p class="text-lg">I'm a B.Tech. (Hons) CSE student specializing in Artificial Intelligence at Chhattisgarh Swami Vivekanand Technical University (CGPA: 7.5). With hands-on experience in data science and machine learning, I focus on predictive maintenance, generative modeling, and medical image analysis. My work includes developing a digital twin for centrifugal pumps and a CNN-based MRI classifier for brain tumor detection. Proficient in Python, TensorFlow, and end-to-end ML pipelines, I aim to create impactful AI solutions.</p>
+      <div class="dash-body">
+        <div class="dash-stats">
+          <div class="stat"><div class="label">Epoch</div><div class="value" id="epoch-val">1 / 200</div></div>
+          <div class="stat"><div class="label">Loss</div><div class="value" id="loss-val">1.842</div></div>
+          <div class="stat"><div class="label">Accuracy</div><div class="value" id="acc-val">61.2%</div></div>
         </div>
-        <div class="md:w-1/2">
-          <h3 class="text-xl font-semibold mb-4">Education</h3>
-          <ul class="space-y-4">
-            <li>
-              <p class="font-medium">B.Tech. CSE (AI), CSVTU, Bhilai</p>
-              <p class="text-gray-600">2022 - Present | CGPA: 7.7</p>
-            </li>
-            <li>
-              <p class="font-medium">12th, Holy Angels Public School (CBSE)</p>
-              <p class="text-gray-600">2021 | 74.4%</p>
-            </li>
-            <li>
-              <p class="font-medium">10th, S.B.T Public School (CBSE)</p>
-              <p class="text-gray-600">2019 | 80%</p>
-            </li>
-          </ul>
-        </div>
+        <canvas id="loss-canvas"></canvas>
       </div>
-    </div>
-  </section>
-
-  <!-- Skills Section -->
-  
-<section id="skills" class="py-16 pattern-bg">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center mb-12 fade-in">Skills</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">Programming & Libraries</h3>
-        <p>Python (NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, TensorFlow, PyTorch, OpenCV), SQL</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">AI/ML Core Concepts</h3>
-        <p>Statistics, Data Structures, ML (SVM, RF, XGBoost), Deep Learning (CNN, LSTM, GANs), NLP</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">Advanced AI Technologies</h3>
-        <p>LLMs, RAG, Prompt Engineering, LangChain Agents, FAISS, ChromaDB, Agentic AI</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">Data Handling & Processing</h3>
-        <p>Data Cleaning, EDA, Feature Engineering, Web Scraping, Visualization</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">Tools & Platforms</h3>
-        <p>Google Colab, Git, MATLAB, Tableau, VS Code, Jupyter</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">Cloud & Deployment</h3>
-        <p>Google Cloud (Firebase), AWS (S3, EC2), Docker,Red Hat, ManageEngine, Lansweeper, Wazuh, Apache kafka.</p>
-      </div>
-
+      <div class="dash-foot">Illustrative training run, representative of pipelines built below</div>
     </div>
   </div>
 </section>
-     
 
-  <!-- Experience Section -->
-  <section id="experience" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Experience</h2>
-      <div class="space-y-12">
-        <div class="card fade-in">
-          <h3 class="text-2xl font-semibold text-teal-600">Digital Twin of Centrifugal Pump (NSTL-DRDO) | IIT Roorkee</h3>
-          <p class="text-gray-600">2025 </p>
-          <ul class="list-disc list-inside mt-4 space-y-2">
-            <li>Collaborated on predictive maintenance using AI/ML techniques.</li>
-            <li>Trained models with Random Forest, XGBoost, and LSTM for time-series forecasting.</li>
-            <li>Developed a live simulation dashboard for real-time pump performance and failure prediction.</li>
-            <li>Reduced unplanned downtime in defense applications.</li>
-          </ul>
-        </div>
-        <div class="card fade-in">
-          <h3 class="text-2xl font-semibold text-teal-600">Data Scientist | Quick CURD</h3>
-          <p class="text-gray-600">2025</p>
-          <ul class="list-disc list-inside mt-4 space-y-2">
-            <li>Framed real-world ML problems and mastered the end-to-end ML workflow.</li>
-            <li>Focused on feature clarity, data consistency, and domain alignment.</li>
-            <li>Developed scalable AI solutions for dynamic use cases.</li>
-          </ul>
-        </div>
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">01</span> About<span class="rule"></span></div>
+    <h2 class="section-title">Profile</h2>
+    <div class="about-grid">
+      <div class="about-text" data-reveal>
+        <p>I'm a B.Tech (Hons) CSE student specializing in Artificial Intelligence at Chhattisgarh Swami Vivekanand Technical University (CGPA: 7.5). With hands-on experience in data science and machine learning, I focus on predictive maintenance, generative modeling, and medical image analysis.</p>
+        <p>My work includes developing a digital twin for centrifugal pumps and a CNN-based MRI classifier for brain tumor detection. Proficient in Python, TensorFlow, and end-to-end ML pipelines, I aim to create impactful AI solutions.</p>
+      </div>
+      <div data-reveal>
+        <div class="col-h">Education</div>
+        <ul class="edu-list">
+          <li>
+            <div class="deg">B.Tech. CSE (AI), CSVTU, Bhilai</div>
+            <div class="meta">2022 – Present · CGPA 7.5</div>
+          </li>
+          <li>
+            <div class="deg">12th, Holy Angels Public School (CBSE)</div>
+            <div class="meta">2021 · 75%</div>
+          </li>
+          <li>
+            <div class="deg">10th, S.B.T Public School (CBSE)</div>
+            <div class="meta">2019 · 80%</div>
+          </li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Projects Section -->
-  
-<!-- Projects Section -->
-<section id="projects" class="py-16 pattern-bg">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center mb-12 fade-in">Projects</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="section-alt hairline">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">02</span> Skills<span class="rule"></span></div>
+    <h2 class="section-title">Capabilities</h2>
+    <div class="skills-grid">
 
-      <!-- From Resume -->
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Vibration Data Analysis of a Centrifugal Pump</h3>
-        <p class="mt-2">Processed real-time vibration signals, applied FFT and ML models (RF, XGBoost, LSTM) for predictive maintenance and anomaly detection. Built dashboards for actionable insights.</p>
-        <a href="https://github.com/mauryag113/Vibration-Data-Analysis-of-a-Centrifugal-Pump" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+      <div class="skill-card" data-reveal>
+        <h3>Programming & Libraries</h3>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Pandas</span>
+          <span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Scikit-learn</span>
+          <span class="tag">TensorFlow</span><span class="tag">PyTorch</span><span class="tag">OpenCV</span><span class="tag">SQL</span>
+        </div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Human Activity Recognition (HAR)</h3>
-        <p class="mt-2">Implemented ML (Logistic Regression, SVM, RF) and DL models on UCI HAR dataset. Achieved 96.7% accuracy with Linear SVC, outperforming baseline methods.</p>
-        <a href="https://github.com/mauryag113/Human-Activity-Recognition-HAR-using-UCI-Dataset" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+      <div class="skill-card" data-reveal>
+        <h3>AI/ML Core Concepts</h3>
+        <div class="tag-row">
+          <span class="tag">Statistics</span><span class="tag">Data Structures</span><span class="tag">SVM</span>
+          <span class="tag">Random Forest</span><span class="tag">XGBoost</span><span class="tag">CNN</span>
+          <span class="tag">LSTM</span><span class="tag">GANs</span><span class="tag">NLP</span>
+        </div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Tooth Abnormality Detection</h3>
-        <p class="mt-2">Developed YOLOv8-based detection for dental anomalies (decay, black stains). Trained on 244 images, achieving mAP50 of 82.2% (decay) and 57.8% (black stains).</p>
-        <a href="https://github.com/mauryag113/Teeth-Abnormility-Detection" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+      <div class="skill-card" data-reveal>
+        <h3>Advanced AI Technologies</h3>
+        <div class="tag-row">
+          <span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">Prompt Engineering</span>
+          <span class="tag">LangChain Agents</span><span class="tag">FAISS</span><span class="tag">ChromaDB</span><span class="tag">Agentic AI</span>
+        </div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Breast Cancer Detection</h3>
-        <p class="mt-2">Built a classification model using ML/DL techniques to detect breast cancer from medical datasets. Achieved high accuracy and provided explainable insights for clinical use.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+      <div class="skill-card" data-reveal>
+        <h3>Data Handling & Processing</h3>
+        <div class="tag-row">
+          <span class="tag">Data Cleaning</span><span class="tag">EDA</span><span class="tag">Feature Engineering</span>
+          <span class="tag">Web Scraping</span><span class="tag">Visualization</span>
+        </div>
       </div>
 
-      <!-- From Earlier Website -->
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Remaining Useful Life (RUL) of Pump Components</h3>
-        <p class="mt-2">Developed ML algorithms to estimate RUL of centrifugal pump components with real-time health monitoring.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+      <div class="skill-card" data-reveal>
+        <h3>Tools & Platforms</h3>
+        <div class="tag-row">
+          <span class="tag">Google Colab</span><span class="tag">Git</span><span class="tag">MATLAB</span>
+          <span class="tag">Tableau</span><span class="tag">VS Code</span><span class="tag">Jupyter</span>
+        </div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Human Induced Load (GAN)</h3>
-        <p class="mt-2">Designed a GAN-based model to calculate human-induced load using W-GAN and W-GAN-GP for stability.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Brain Cancer Detection</h3>
-        <p class="mt-2">Developed a CNN-based model for brain cancer detection using MRI images, achieving 99.5% accuracy.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">Multimodal AI Diagnostic Assistant</h3>
-        <p class="mt-2">Integrated CT and X-ray image models for detecting chest and abdominal conditions using CNNs. Enabled real-time diagnostic dashboard with explainable AI.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">LLM-Powered Medical Report Generator</h3>
-        <p class="mt-2">Built an agentic AI system using RAG pipelines and LLMs to generate clinical reports based on diagnostic outputs with verified medical literature context.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md card fade-in">
-        <h3 class="text-xl font-semibold text-teal-600">AI-Powered Stock Trend Prediction</h3>
-        <p class="mt-2">Developed an LSTM-based model for multi-stock forecasting. Integrated LLMs for news sentiment analysis using a RAG pipeline for better market insights.</p>
-        <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline mt-4 inline-block">View on GitHub</a>
+      <div class="skill-card" data-reveal>
+        <h3>Cloud & Deployment</h3>
+        <div class="tag-row">
+          <span class="tag">Firebase</span><span class="tag">AWS S3</span><span class="tag">AWS EC2</span><span class="tag">Docker (basic)</span>
+        </div>
       </div>
 
     </div>
   </div>
 </section>
 
-
-  
-  <!-- About Section -->
-  <!-- (Your provided About Section goes here exactly as you wrote it) -->
-
-  <!-- Skills Section -->
-  <!-- (Your provided Skills Section goes here exactly as you wrote it) -->
-
-  <!-- Experience Section -->
-  <!-- (Your provided Experience Section goes here exactly as you wrote it) -->
-
-  <!-- Projects Section -->
-  <!-- (Your provided Projects Section goes here exactly as you wrote it) -->
-
-  <!-- Achievements & Certifications Section -->
-  <section id="achievements" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Achievements & Certifications</h2>
-      <ul class="list-disc list-inside space-y-3 text-lg fade-in">
-        <li>📜 LORs from two Professors at <strong>IIT Roorkee</strong>.</li>
-        <li>⭐ 5 Stars in <strong>Python</strong> & ⭐⭐ 4 Stars in <strong>SQL</strong> on HackerRank.</li>
-        <li>🎓 Python for Data Science – IBM SkillsBuild.</li>
-        <li>🎓 Machine Learning with AI – Internshala & NSDC.</li>
-        <li>🎓 Build Classical Machine Learning Models – Microsoft Learn.</li>
-        <li>🎓 Introduction to Machine Learning – Microsoft Learn.</li>
-        <li>🎓 Overview of Data Tools & Languages – IBM SkillsBuild.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Gallery Section -->
-  <section id="gallery" class="py-16 pattern-bg">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12 fade-in">📸 Gallery – Wall of Fame </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 fade-in">
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="images/certificates/ibm_datascience.png" alt="IBM Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">IBM – Python for Data Science</p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="Screenshot 2025-08-17 163114.png" alt="Internshala Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">Internshala – ML with AI</p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="NSDC_page-0001.jpg" alt="Internshala Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">Internshala – NSDC</p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="IBM.jpg" alt="IBM Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">Overview of Data Tool and Language</p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="Matlab.jpg" alt="Matlab Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">Matlab certified </p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="classical.jpg" alt="Internshala Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">Classical ML model Learnining</p>
-        </div>
-        <div class="bg-white p-4 rounded-lg shadow-md card">
-          <img src="SQL.png" alt="SQL_HACKERRANK Certificate" class="rounded-lg w-full h-64 object-cover">
-          <p class="mt-2 text-center font-medium">Classical ML model Learnining</p>
-        </div>
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">03</span> Experience<span class="rule"></span></div>
+    <h2 class="section-title">Track Record</h2>
+    <div class="timeline">
+      <div class="tl-item" data-reveal>
+        <h3>Digital Twin of Centrifugal Pump (NSTL–DRDO) · IIT Roorkee</h3>
+        <div class="role-meta">2025</div>
+        <ul>
+          <li>Collaborated on predictive maintenance using AI/ML techniques.</li>
+          <li>Trained models with Random Forest, XGBoost, and LSTM for time-series forecasting.</li>
+          <li>Developed a live simulation dashboard for real-time pump performance and failure prediction.</li>
+          <li>Reduced unplanned downtime in defense applications.</li>
+        </ul>
+      </div>
+      <div class="tl-item" data-reveal>
+        <h3>Data Scientist · Quick CURD</h3>
+        <div class="role-meta">2025</div>
+        <ul>
+          <li>Framed real-world ML problems and mastered the end-to-end ML workflow.</li>
+          <li>Focused on feature clarity, data consistency, and domain alignment.</li>
+          <li>Developed scalable AI solutions for dynamic use cases.</li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Contact Section -->
-  <!-- Contact Section -->
-  <section id="contact" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12 fade-in">Contact</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="fade-in">
-          <h3 class="text-2xl font-semibold mb-4 text-teal-600">Get in Touch</h3>
-          <p class="mb-2">Email: <a href="mailto:Mauryag7878@gmail.com" class="text-teal-500 hover:underline">Mauryag7878@gmail.com</a></p>
-          <p class="mb-2">Phone: <a href="tel:+918528187710" class="text-teal-500 hover:underline">+91 8528187710</a></p>
-          <p class="mt-4">
-            <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" class="text-teal-500 hover:underline">LinkedIn</a> | 
-            <a href="https://github.com/mauryag113" target="_blank" class="text-teal-500 hover:underline">GitHub</a>
-          </p>
-        </div>
-        <div class="fade-in">
-          <h3 class="text-2xl font-semibold mb-4 text-teal-600">Send a Message</h3>
-          <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-4">
-            <div>
-              <label for="name" class="block text-sm font-medium">Name</label>
-              <input type="text" id="name" name="name" class="w-full p-2 border rounded-lg focus:ring-teal-500 focus:border-teal-500" placeholder="Your Name" required>
-            </div>
-            <div>
-              <label for="email" class="block text-sm font-medium">Email</label>
-              <input type="email" id="email" name="email" class="w-full p-2 border rounded-lg focus:ring-teal-500 focus:border-teal-500" placeholder="Your Email" required>
-            </div>
-            <div>
-              <label for="message" class="block text-sm font-medium">Message</label>
-              <textarea id="message" name="message" class="w-full p-2 border rounded-lg focus:ring-teal-500 focus:border-teal-500" rows="4" placeholder="Your Message" required></textarea>
-            </div>
-            <button type="submit" class="bg-teal-500 text-white px-6 py-2 rounded-lg hover:bg-teal-600">Send</button>
-          </form>
-          <p id="form-message">Thank you! Your message has been sent.</p>
-        </div>
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="section-alt hairline">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">04</span> Projects<span class="rule"></span></div>
+    <h2 class="section-title">Selected Work</h2>
+    <div class="proj-grid">
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Vibration Data Analysis of a Centrifugal Pump</h3><span class="proj-badge">FFT · RF · LSTM</span></div>
+        <p>Processed real-time vibration signals, applied FFT and ML models (RF, XGBoost, LSTM) for predictive maintenance and anomaly detection. Built dashboards for actionable insights.</p>
+        <a class="proj-link" href="https://github.com/mauryag113/Vibration-Data-Analysis-of-a-Centrifugal-Pump" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Human Activity Recognition (HAR)</h3><span class="proj-badge">96.7% acc</span></div>
+        <p>Implemented ML (Logistic Regression, SVM, RF) and DL models on the UCI HAR dataset. Achieved 96.7% accuracy with Linear SVC, outperforming baseline methods.</p>
+        <a class="proj-link" href="https://github.com/mauryag113/Human-Activity-Recognition-HAR-using-UCI-Dataset" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Tooth Abnormality Detection</h3><span class="proj-badge">YOLOv8</span></div>
+        <p>Developed YOLOv8-based detection for dental anomalies (decay, black stains). Trained on 244 images, achieving mAP50 of 82.2% (decay) and 57.8% (black stains).</p>
+        <a class="proj-link" href="https://github.com/mauryag113/Teeth-Abnormility-Detection" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Breast Cancer Detection</h3><span class="proj-badge">ML/DL</span></div>
+        <p>Built a classification model using ML/DL techniques to detect breast cancer from medical datasets. Achieved high accuracy and provided explainable insights for clinical use.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Remaining Useful Life (RUL) of Pump Components</h3><span class="proj-badge">Time-series</span></div>
+        <p>Developed ML algorithms to estimate RUL of centrifugal pump components with real-time health monitoring.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Human Induced Load (GAN)</h3><span class="proj-badge">W-GAN-GP</span></div>
+        <p>Designed a GAN-based model to calculate human-induced load using W-GAN and W-GAN-GP for stability.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Brain Cancer Detection</h3><span class="proj-badge">99.5% acc</span></div>
+        <p>Developed a CNN-based model for brain cancer detection using MRI images, achieving 99.5% accuracy.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>Multimodal AI Diagnostic Assistant</h3><span class="proj-badge">CNN · XAI</span></div>
+        <p>Integrated CT and X-ray image models for detecting chest and abdominal conditions using CNNs. Enabled a real-time diagnostic dashboard with explainable AI.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>LLM-Powered Medical Report Generator</h3><span class="proj-badge">RAG · Agentic</span></div>
+        <p>Built an agentic AI system using RAG pipelines and LLMs to generate clinical reports based on diagnostic outputs with verified medical literature context.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+      <div class="proj-card" data-reveal>
+        <div class="proj-top"><h3>AI-Powered Stock Trend Prediction</h3><span class="proj-badge">LSTM · RAG</span></div>
+        <p>Developed an LSTM-based model for multi-stock forecasting. Integrated LLMs for news sentiment analysis using a RAG pipeline for better market insights.</p>
+        <a class="proj-link" href="https://github.com/mauryag113" target="_blank" rel="noopener">View repository ↗</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<section id="achievements">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">05</span> Recognition<span class="rule"></span></div>
+    <h2 class="section-title">Achievements & Certifications</h2>
+    <div class="log" data-reveal>
+      <div class="log-line"><span class="log-time">Recognition</span><span class="log-msg">Letters of Recommendation from two professors at <b>IIT Roorkee</b>.</span></div>
+      <div class="log-line"><span class="log-time">HackerRank</span><span class="log-msg">5★ in <b>Python</b> and 4★ in <b>SQL</b> on HackerRank.</span></div>
+      <div class="log-line"><span class="log-time">Certification</span><span class="log-msg">Python for Data Science — <b>IBM SkillsBuild</b>.</span></div>
+      <div class="log-line"><span class="log-time">Certification</span><span class="log-msg">Machine Learning with AI — <b>Internshala & NSDC</b>.</span></div>
+      <div class="log-line"><span class="log-time">Certification</span><span class="log-msg">Build Classical Machine Learning Models — <b>Microsoft Learn</b>.</span></div>
+      <div class="log-line"><span class="log-time">Certification</span><span class="log-msg">Introduction to Machine Learning — <b>Microsoft Learn</b>.</span></div>
+      <div class="log-line"><span class="log-time">Certification</span><span class="log-msg">Overview of Data Tools & Languages — <b>IBM SkillsBuild</b>.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="section-alt hairline">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">06</span> Gallery<span class="rule"></span></div>
+    <h2 class="section-title">Wall of Fame</h2>
+    <div class="gallery-grid" data-reveal>
+      <div class="gcard">
+        <div class="thumb"><img src="images/certificates/ibm_datascience.png" alt="IBM Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">IBM — Python for Data Science</div>
+      </div>
+      <div class="gcard">
+        <div class="thumb"><img src="Screenshot 2025-08-17 163114.png" alt="Internshala Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">Internshala — ML with AI</div>
+      </div>
+      <div class="gcard">
+        <div class="thumb"><img src="NSDC_page-0001.jpg" alt="NSDC Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">Internshala — NSDC</div>
+      </div>
+      <div class="gcard">
+        <div class="thumb"><img src="IBM.jpg" alt="IBM Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">Overview of Data Tools & Languages</div>
+      </div>
+      <div class="gcard">
+        <div class="thumb"><img src="Matlab.jpg" alt="Matlab Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">MATLAB Certified</div>
+      </div>
+      <div class="gcard">
+        <div class="thumb"><img src="classical.jpg" alt="Classical ML Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">Build Classical ML Models</div>
+      </div>
+      <div class="gcard">
+        <div class="thumb"><img src="SQL.png" alt="SQL HackerRank Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="cap">SQL — HackerRank</div>
       </div>
     </div>
-  </section>
-  <!-- (Your provided Contact Section goes here exactly as you wrote it) -->
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-100 py-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-gray-600">© 2025 Sachin Maurya. All rights reserved.</p>
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow"><span class="idx">07</span> Contact<span class="rule"></span></div>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-grid">
+      <div data-reveal>
+        <div class="col-h">Reach me directly</div>
+        <div class="contact-item"><span class="ic">@</span><a href="mailto:Mauryag7878@gmail.com">Mauryag7878@gmail.com</a></div>
+        <div class="contact-item"><span class="ic">#</span><a href="tel:+918528187710">+91 8528187710</a></div>
+        <div class="social-row">
+          <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://github.com/mauryag113" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="form-card" data-reveal>
+        <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com" required>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Say hello..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary submit-btn">Send Message</button>
+        </form>
+        <p id="form-message">✓ Message sent — thank you, I'll get back to you soon.</p>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <!-- Back to Top Button -->
-  <button id="back-to-top" title="Back to Top">↑</button>
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <p>© 2026 Sachin Maurya. All rights reserved.</p>
+    <p>AI / ML Engineer</p>
+  </div>
+</footer>
 
-  <!-- JavaScript -->
-  <script>
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-    // Fade-in on scroll
-    const fadeIns = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    fadeIns.forEach(element => observer.observe(element));
-    // Form submission
-    const form = document.getElementById('contact-form');
-    const formMessage = document.getElementById('form-message');
-    if (form) {
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-        try {
-          const response = await fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-          if (response.ok) { form.reset(); formMessage.style.display = 'block'; setTimeout(() => { formMessage.style.display = 'none'; }, 5000); }
-          else alert('Error sending message. Please try again later.');
-        } catch (error) { alert('Error sending message. Please try again later.'); }
-      });
+<button id="back-to-top" title="Back to top" aria-label="Back to top">↑</button>
+
+<script>
+/* ---------- reveal on scroll ---------- */
+const revealEls = document.querySelectorAll('[data-reveal]');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ---------- smooth anchor scroll + mobile menu close ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e){
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({ behavior:'smooth' });
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('burger').setAttribute('aria-expanded','false');
     }
-    // Back to top
-    const backToTopButton = document.getElementById('back-to-top');
-    window.addEventListener('scroll', () => { backToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none'; });
-    backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  </script>
+  });
+});
+
+/* ---------- mobile burger ---------- */
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+/* ---------- back to top ---------- */
+const backBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  backBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+});
+backBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* ---------- role typewriter ---------- */
+const roles = [
+  'AI Engineer', 'Machine Learning Engineer', 'Computer Vision Engineer',
+  'Data Science Engineer', 'Generative Modeling'
+];
+const roleEl = document.getElementById('role-text');
+let rIdx = 0, cIdx = 0, deleting = false;
+function tick(){
+  const word = roles[rIdx];
+  if(!deleting){
+    cIdx++;
+    roleEl.textContent = word.slice(0, cIdx);
+    if(cIdx === word.length){ deleting = true; setTimeout(tick, 1500); return; }
+  } else {
+    cIdx--;
+    roleEl.textContent = word.slice(0, cIdx);
+    if(cIdx === 0){ deleting = false; rIdx = (rIdx + 1) % roles.length; }
+  }
+  setTimeout(tick, deleting ? 40 : 70);
+}
+tick();
+
+/* ---------- hero training figure: loss curve + counters ---------- */
+(function(){
+  const canvas = document.getElementById('loss-canvas');
+  const ctx = canvas.getContext('2d');
+  const epochEl = document.getElementById('epoch-val');
+  const lossEl = document.getElementById('loss-val');
+  const accEl = document.getElementById('acc-val');
+
+  function resize(){
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * devicePixelRatio;
+    canvas.height = rect.height * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
+  window.addEventListener('resize', resize);
+
+  const totalEpochs = 200;
+  let history = [];
+  let epoch = 1;
+
+  function lossAt(e){
+    const base = 1.9 * Math.exp(-e/45) + 0.06;
+    const noise = (Math.sin(e*1.7) * 0.03) + (Math.random()-0.5)*0.02;
+    return Math.max(0.04, base + noise);
+  }
+
+  function draw(){
+    const w = canvas.getBoundingClientRect().width;
+    const h = canvas.getBoundingClientRect().height;
+    ctx.clearRect(0,0,w,h);
+
+    ctx.strokeStyle = 'rgba(22,35,63,0.07)';
+    ctx.lineWidth = 1;
+    for(let i=1;i<4;i++){
+      const y = (h/4)*i;
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+    }
+
+    if(history.length < 2) return;
+    const maxLoss = 2.0;
+    const stepX = w / (totalEpochs - 1);
+
+    ctx.beginPath();
+    history.forEach((v, i) => {
+      const x = i * stepX;
+      const y = h - (v / maxLoss) * h;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle = '#16233F';
+    ctx.lineWidth = 1.8;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    ctx.lineTo((history.length-1)*stepX, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    const fillGrad = ctx.createLinearGradient(0,0,0,h);
+    fillGrad.addColorStop(0, 'rgba(138,106,47,0.14)');
+    fillGrad.addColorStop(1, 'rgba(138,106,47,0)');
+    ctx.fillStyle = fillGrad;
+    ctx.fill();
+  }
+
+  function step(){
+    if(epoch > totalEpochs){
+      history = [];
+      epoch = 1;
+    }
+    const loss = lossAt(epoch);
+    history.push(loss);
+    const acc = Math.min(99.4, 55 + (1 - loss/1.9) * 44 + Math.random()*0.6);
+
+    epochEl.textContent = `${epoch} / ${totalEpochs}`;
+    lossEl.textContent = loss.toFixed(3);
+    accEl.textContent = `${acc.toFixed(1)}%`;
+
+    draw();
+    epoch++;
+  }
+
+  resize();
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    setInterval(step, 90);
+  } else {
+    for(let i=0;i<totalEpochs;i++) step();
+  }
+})();
+
+/* ---------- contact form ---------- */
+const form = document.getElementById('contact-form');
+const formMessage = document.getElementById('form-message');
+if(form){
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const formData = new FormData(form);
+    try{
+      const response = await fetch(form.action, { method:'POST', body:formData, headers:{ 'Accept':'application/json' } });
+      if(response.ok){
+        form.reset();
+        formMessage.style.display = 'block';
+        setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+      } else {
+        alert('Error sending message. Please try again later.');
+      }
+    } catch(err){
+      alert('Error sending message. Please try again later.');
+    }
+  });
+}
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
