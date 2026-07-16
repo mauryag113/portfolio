@@ -593,10 +593,10 @@
   .gcard{ cursor:pointer; }
   .gcard:hover{ transform:translateY(-5px); border-color:var(--line-strong); box-shadow:0 22px 42px -24px rgba(22,35,63,.26); }
   .gcard .thumb{
-    position:relative; width:100%; height:190px; overflow:hidden;
+    position:relative; width:100%; height:215px; overflow:hidden;
     background:var(--bg-alt); display:flex; align-items:center; justify-content:center;
   }
-  .gcard .thumb img{ width:100%; height:100%; object-fit:contain; object-position:center; padding:10px; transition:transform .5s cubic-bezier(.2,.7,.3,1); }
+  .gcard .thumb img{ width:100%; height:100%; object-fit:cover; object-position:top center; transition:transform .5s cubic-bezier(.2,.7,.3,1); }
   .gcard:hover .thumb img{ transform:scale(1.06); }
   .gcard .thumb::after{
     content:'⤢'; position:absolute; top:10px; right:10px; width:30px; height:30px; border-radius:7px;
@@ -1161,7 +1161,7 @@
     <h2 class="section-title">Wall of Fame</h2>
     <div class="gallery-grid">
       <div class="gcard" data-reveal>
-        <div class="thumb"><img src="images/certificates/ibm_datascience.png" alt="IBM Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>Certificate preview unavailable</div>'"></div>
+        <div class="thumb"><img src="ibm_datascience.png" alt="IBM Certificate" onerror="this.closest('.thumb').classList.add('thumb-broken');this.parentElement.innerHTML='<div class=&quot;ph&quot;><svg viewBox=&quot;0 0 24 24&quot; width=&quot;28&quot; height=&quot;28&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.6&quot;><path d=&quot;M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z&quot;/><polyline points=&quot;14 2 14 8 20 8&quot;/></svg><span>Certificate image not found</span></div>'"></div>
         <div class="cap">IBM — Python for Data Science</div>
       </div>
       <div class="gcard" data-reveal>
