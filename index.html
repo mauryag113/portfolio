@@ -75,12 +75,91 @@
   .section-alt{ background:var(--bg-alt); }
   .section-alt.hairline{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
 
-  [data-reveal]{ opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease; }
+  [data-reveal]{ opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1); }
   [data-reveal].is-visible{ opacity:1; transform:translateY(0); }
+  [data-reveal="left"]{ transform:translateY(20px) translateX(-26px); }
+  [data-reveal="left"].is-visible{ transform:translateY(0) translateX(0); }
+  [data-reveal="right"]{ transform:translateY(20px) translateX(26px); }
+  [data-reveal="right"].is-visible{ transform:translateY(0) translateX(0); }
+  [data-reveal="scale"]{ transform:translateY(14px) scale(.94); }
+  [data-reveal="scale"].is-visible{ transform:translateY(0) scale(1); }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
   }
+
+  /* ============ PRELOADER ============ */
+  #preloader{
+    position:fixed; inset:0; z-index:999; background:var(--bg);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #preloader.done{ opacity:0; visibility:hidden; pointer-events:none; }
+  .pre-mark{
+    font-family:var(--font-display); font-size:1.6rem; font-weight:600; color:var(--navy); letter-spacing:-0.01em;
+    opacity:0; animation:preFade .7s ease forwards .1s;
+  }
+  .pre-mark em{ font-style:italic; color:var(--gold); font-weight:500; }
+  .pre-bar{ width:180px; height:2px; background:var(--line); border-radius:2px; overflow:hidden; opacity:0; animation:preFade .7s ease forwards .3s; }
+  .pre-bar::after{
+    content:''; display:block; height:100%; width:40%; background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+    animation:preSlide 1.1s ease-in-out infinite;
+  }
+  @keyframes preFade{ to{ opacity:1; } }
+  @keyframes preSlide{
+    0%{ transform:translateX(-100%); }
+    100%{ transform:translateX(350%); }
+  }
+  body.is-loading{ overflow:hidden; }
+
+  /* ============ CURSOR SPOTLIGHT (hero) ============ */
+  .cursor-glow{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(520px circle at var(--mx,50%) var(--my,20%), rgba(138,106,47,.10), transparent 70%);
+    transition:opacity .4s ease;
+  }
+
+  /* ============ FLOATING ORBS (hero ambience) ============ */
+  .orb{
+    position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0;
+    opacity:.55; animation:orbFloat 14s ease-in-out infinite;
+  }
+  .orb-a{ width:340px; height:340px; background:radial-gradient(circle, rgba(138,106,47,.22), transparent 70%); top:-80px; right:-40px; animation-duration:16s; }
+  .orb-b{ width:260px; height:260px; background:radial-gradient(circle, rgba(22,35,63,.14), transparent 70%); bottom:-60px; left:10%; animation-duration:19s; animation-delay:-4s; }
+  @keyframes orbFloat{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(24px,-30px) scale(1.08); }
+  }
+
+  /* ============ MAGNETIC BUTTONS ============ */
+  .btn, .nav-cta{ will-change:transform; }
+
+  /* ============ TILT CARDS ============ */
+  .domain-card, .skill-card, .proj-card{ transform-style:preserve-3d; will-change:transform; }
+
+  /* ============ ANIMATED SECTION UNDERLINE ============ */
+  .section-title{ position:relative; display:inline-block; }
+  .section-title::after{
+    content:''; position:absolute; left:0; bottom:-14px; height:2px; width:0;
+    background:linear-gradient(90deg, var(--gold), transparent);
+    transition:width 1s cubic-bezier(.16,.84,.44,1);
+  }
+  section.title-in .section-title::after{ width:100%; }
+
+  /* ============ MARQUEE ============ */
+  .marquee-wrap{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--surface); overflow:hidden; padding:22px 0;
+  }
+  .marquee-track{ display:flex; width:max-content; animation:marquee 32s linear infinite; }
+  .marquee-track:hover{ animation-play-state:paused; }
+  .marquee-item{
+    display:flex; align-items:center; gap:14px; padding:0 36px;
+    font-family:var(--font-mono); font-size:.82rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-muted);
+    white-space:nowrap;
+  }
+  .marquee-item .sep{ color:var(--gold); }
+  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
   /* ============ NAV ============ */
   .nav{
@@ -153,6 +232,21 @@
     position:relative; z-index:2;
     display:grid; grid-template-columns:1.15fr .85fr; gap:64px; align-items:center;
   }
+  .hero-copy > *{
+    opacity:0; transform:translateY(24px);
+    transition:opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1);
+  }
+  body.hero-in .hero-copy > *{ opacity:1; transform:translateY(0); }
+  body.hero-in .hero-copy > *:nth-child(1){ transition-delay:.05s; }
+  body.hero-in .hero-copy > *:nth-child(2){ transition-delay:.16s; }
+  body.hero-in .hero-copy > *:nth-child(3){ transition-delay:.27s; }
+  body.hero-in .hero-copy > *:nth-child(4){ transition-delay:.38s; }
+  body.hero-in .hero-copy > *:nth-child(5){ transition-delay:.49s; }
+  .dash{
+    opacity:0; transform:translateY(30px) scale(.97);
+    transition:opacity .9s cubic-bezier(.16,.84,.44,1) .4s, transform .9s cubic-bezier(.16,.84,.44,1) .4s;
+  }
+  body.hero-in .dash{ opacity:1; transform:translateY(0) scale(1); }
   .kicker{
     font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold);
     display:inline-flex; align-items:center; gap:9px; margin-bottom:26px;
@@ -545,6 +639,70 @@
   .field input:focus, .field textarea:focus{ outline:none; border-color:var(--navy); }
   .submit-btn{ width:100%; justify-content:center; border:none; }
 
+  /* ---- animated success state ---- */
+  .form-success{
+    display:flex; align-items:center; gap:14px; margin-top:18px; padding:16px 18px;
+    background:var(--bg-alt); border:1px solid var(--line-strong); border-radius:8px;
+    font-size:.92rem; color:var(--navy); font-weight:500;
+    max-height:0; opacity:0; overflow:hidden; padding-top:0; padding-bottom:0; margin-top:0;
+    transition:max-height .5s cubic-bezier(.16,.84,.44,1), opacity .4s ease .1s, padding .5s ease, margin .5s ease;
+  }
+  .form-success.show{ max-height:120px; opacity:1; padding:16px 18px; margin-top:18px; }
+  .success-check{ width:26px; height:26px; flex-shrink:0; }
+  .success-check circle{ stroke:var(--gold); stroke-width:2.5; stroke-dasharray:151; stroke-dashoffset:151; }
+  .success-check path{ stroke:var(--gold); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:36; stroke-dashoffset:36; }
+  .form-success.show .success-check circle{ animation:drawCircle .5s ease forwards; }
+  .form-success.show .success-check path{ animation:drawCheck .35s ease forwards .45s; }
+  @keyframes drawCircle{ to{ stroke-dashoffset:0; } }
+  @keyframes drawCheck{ to{ stroke-dashoffset:0; } }
+
+  /* ---- nav scroll shrink ---- */
+  .nav{ transition:height .3s ease, box-shadow .3s ease; }
+  .nav.scrolled .nav-inner{ height:62px; }
+  .nav.scrolled{ box-shadow:0 8px 24px -18px rgba(22,35,63,.35); }
+  .nav-inner{ transition:height .3s ease; }
+
+  /* ---- button ripple ---- */
+  .btn{ }
+  .ripple{
+    position:absolute; border-radius:50%; background:rgba(255,255,255,.55);
+    transform:scale(0); animation:rippleFx .6s ease-out forwards; pointer-events:none;
+  }
+  .btn-ghost .ripple{ background:rgba(22,35,63,.18); }
+  @keyframes rippleFx{ to{ transform:scale(2.6); opacity:0; } }
+
+  /* ---- shimmering hero emphasis ---- */
+  .hero h1 em{
+    font-style:italic; font-weight:500;
+    background:linear-gradient(100deg, var(--gold) 30%, var(--gold-soft) 40%, #d8b877 50%, var(--gold-soft) 60%, var(--gold) 70%);
+    background-size:250% 100%;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shimmerText 6s linear infinite;
+  }
+  @keyframes shimmerText{
+    0%{ background-position:200% 0; }
+    100%{ background-position:-50% 0; }
+  }
+
+  /* ---- idle floating domain icons ---- */
+  .domain-icon{ animation:iconBob 4.5s ease-in-out infinite; }
+  .domain-card:nth-child(2) .domain-icon{ animation-delay:-1.5s; }
+  .domain-card:nth-child(3) .domain-icon{ animation-delay:-3s; }
+  @keyframes iconBob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-5px); }
+  }
+  .domain-card:hover .domain-icon{ animation-play-state:paused; }
+
+  /* ---- gallery wipe reveal ---- */
+  .gcard .thumb img{ clip-path:inset(0 0 0 0); }
+  .gcard[data-reveal]:not(.is-visible) .thumb img{ clip-path:inset(0 100% 0 0); }
+  .gcard .thumb img{ transition:clip-path .9s cubic-bezier(.16,.84,.44,1), transform .5s cubic-bezier(.2,.7,.3,1); }
+
+  /* ---- parallax layers ---- */
+  .hero{ will-change:background-position; }
+  .orb{ will-change:transform; }
+
   /* ============ FOOTER ============ */
   footer{ border-top:1px solid var(--line); padding:36px 0; }
   footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
@@ -582,7 +740,11 @@
   }
 </style>
 </head>
-<body>
+<body class="is-loading">
+<div id="preloader">
+  <div class="pre-mark">Sachin <em>Maurya</em></div>
+  <div class="pre-bar"></div>
+</div>
 <div id="scroll-progress"></div>
 
 <!-- ============ NAV ============ -->
@@ -619,19 +781,22 @@
 
 <!-- ============ HERO ============ -->
 <section id="home" class="hero">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-copy">
       <div class="kicker"><span class="dot pulse"></span> Currently @ Cywarden Global Services pvt.lmt. — AI/ML Engineer</div>
       <h1>Building AI systems that <em>learn, detect, and predict</em> across domains.</h1>
       <div class="role-line">&mdash; <span id="role-text"></span><span class="cursor"></span></div>
       <p class="lede">AI/ML Engineer building <strong>Cyforte.ai</strong> at Cywarden Global Services. Specialized in <strong>Medical Imaging</strong>, <strong>Predictive Maintenance</strong>, and <strong>Cybersecurity Automation</strong>. Delivering production-grade models from raw sensor data, diagnostic scans, and compliance platforms.</p>
       <div class="btn-row">
-        <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" rel="noopener" class="btn btn-primary">View LinkedIn <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span></a>
-        <a href="AI_Ml_Engineer.pdf" target="_blank" class="btn btn-ghost">Download Résumé <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><polyline points="7 10 12 15 17 10"/><path d="M5 19h14"/></svg></span></a>
+        <a href="https://www.linkedin.com/in/sachin-maurya-b09579263/" target="_blank" rel="noopener" class="btn btn-primary magnetic">View LinkedIn <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span></a>
+        <a href="AI_Ml_Engineer.pdf" target="_blank" class="btn btn-ghost magnetic">Download Résumé <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><polyline points="7 10 12 15 17 10"/><path d="M5 19h14"/></svg></span></a>
       </div>
     </div>
 
-    <div class="dash" data-reveal>
+    <div class="dash">
       <div class="dash-bar">
         <span class="fn">Fig. 01 — Training convergence</span>
         <span class="live"><span class="dot"></span>Live</span>
@@ -674,6 +839,22 @@
     </div>
   </div>
 </section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">Python <span class="sep">✦</span></div>
+    <div class="marquee-item">TensorFlow <span class="sep">✦</span></div>
+    <div class="marquee-item">PyTorch <span class="sep">✦</span></div>
+    <div class="marquee-item">CNN / LSTM <span class="sep">✦</span></div>
+    <div class="marquee-item">XGBoost <span class="sep">✦</span></div>
+    <div class="marquee-item">LangChain Agents <span class="sep">✦</span></div>
+    <div class="marquee-item">RAG <span class="sep">✦</span></div>
+    <div class="marquee-item">OpenCV <span class="sep">✦</span></div>
+    <div class="marquee-item">AWS <span class="sep">✦</span></div>
+    <div class="marquee-item">Docker <span class="sep">✦</span></div>
+  </div>
+</div>
 
 <!-- ============ ABOUT ============ -->
 <section id="about">
@@ -972,7 +1153,10 @@
       </div>
 
       <div class="form-card" data-reveal>
-        <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="30a0d862-979f-4990-989b-5e5e2a8357bf">
+          <input type="hidden" name="subject" value="New message from your portfolio site">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <div class="field">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Your name" required>
@@ -985,9 +1169,15 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="4" placeholder="Say hello..." required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary submit-btn">Send Message <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></button>
+          <button type="submit" class="btn btn-primary submit-btn magnetic" id="submitBtn">
+            <span class="btn-label">Send Message</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </button>
         </form>
-        <p id="form-message">✓ Message sent — thank you, I'll get back to you soon.</p>
+        <div id="form-message" class="form-success">
+          <svg viewBox="0 0 52 52" class="success-check"><circle cx="26" cy="26" r="24" fill="none"/><path fill="none" d="M14 27l7 7 17-17"/></svg>
+          <span>Message sent — thank you, I'll get back to you soon.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1224,27 +1414,171 @@ tick();
   }
 })();
 
+/* ---------- preloader + hero entrance ---------- */
+window.addEventListener('load', () => {
+  const pre = document.getElementById('preloader');
+  setTimeout(() => {
+    pre.classList.add('done');
+    document.body.classList.remove('is-loading');
+    document.body.classList.add('hero-in');
+  }, 500);
+});
+/* fallback in case load event is slow/blocked */
+setTimeout(() => {
+  const pre = document.getElementById('preloader');
+  if(pre && !pre.classList.contains('done')){
+    pre.classList.add('done');
+    document.body.classList.remove('is-loading');
+    document.body.classList.add('hero-in');
+  }
+}, 2200);
+
+/* ---------- cursor spotlight glow (hero) ---------- */
+(function(){
+  const glow = document.getElementById('cursorGlow');
+  const heroSection = document.getElementById('home');
+  if(!glow || !heroSection) return;
+  if(window.matchMedia('(hover: hover)').matches){
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      glow.style.setProperty('--mx', x + '%');
+      glow.style.setProperty('--my', y + '%');
+    });
+  }
+})();
+
+/* ---------- magnetic buttons ---------- */
+(function(){
+  if(!window.matchMedia('(hover: hover)').matches) return;
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width/2;
+      const y = e.clientY - rect.top - rect.height/2;
+      btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+})();
+
+/* ---------- 3D tilt on cards ---------- */
+(function(){
+  if(!window.matchMedia('(hover: hover)').matches) return;
+  document.querySelectorAll('.domain-card, .skill-card, .proj-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(700px) rotateX(${(-py*4).toFixed(2)}deg) rotateY(${(px*4).toFixed(2)}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+})();
+
+/* ---------- marquee: duplicate content for seamless loop ---------- */
+(function(){
+  const track = document.getElementById('marqueeTrack');
+  if(!track) return;
+  track.innerHTML += track.innerHTML;
+})();
+
+/* ---------- alternate reveal direction across grids ---------- */
+(function(){
+  const grids = document.querySelectorAll('.domains-grid, .skills-grid, .proj-grid, .gallery-grid');
+  grids.forEach(grid => {
+    Array.from(grid.children).forEach((child, i) => {
+      if(!child.hasAttribute('data-reveal')) return;
+      child.setAttribute('data-reveal', i % 2 === 0 ? 'left' : 'right');
+    });
+  });
+})();
+
+/* ---------- animated underline once section title enters view ---------- */
+(function(){
+  const titledSections = document.querySelectorAll('section');
+  const titleIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('title-in'); });
+  }, { threshold: 0.4 });
+  titledSections.forEach(sec => { if(sec.querySelector('.section-title')) titleIO.observe(sec); });
+})();
+
 /* ---------- contact form ---------- */
 const form = document.getElementById('contact-form');
 const formMessage = document.getElementById('form-message');
+const submitBtn = document.getElementById('submitBtn');
 if(form){
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     const formData = new FormData(form);
+    const originalLabel = submitBtn.querySelector('.btn-label').textContent;
+    submitBtn.querySelector('.btn-label').textContent = 'Sending...';
+    submitBtn.style.pointerEvents = 'none';
     try{
-      const response = await fetch(form.action, { method:'POST', body:formData, headers:{ 'Accept':'application/json' } });
-      if(response.ok){
+      const response = await fetch(form.action, {
+        method:'POST',
+        body:formData,
+        headers:{ 'Accept':'application/json' }
+      });
+      const result = await response.json();
+      if(response.ok && result.success !== false){
         form.reset();
-        formMessage.style.display = 'block';
-        setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+        formMessage.classList.add('show');
+        setTimeout(() => { formMessage.classList.remove('show'); }, 6000);
       } else {
         alert('Error sending message. Please try again later.');
       }
     } catch(err){
       alert('Error sending message. Please try again later.');
+    } finally {
+      submitBtn.querySelector('.btn-label').textContent = originalLabel;
+      submitBtn.style.pointerEvents = '';
     }
   });
 }
+
+/* ---------- nav scroll shrink ---------- */
+(function(){
+  const nav = document.querySelector('.nav');
+  if(!nav) return;
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+})();
+
+/* ---------- button ripple on click ---------- */
+(function(){
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e){
+      const rect = btn.getBoundingClientRect();
+      const circle = document.createElement('span');
+      const size = Math.max(rect.width, rect.height);
+      circle.className = 'ripple';
+      circle.style.width = circle.style.height = size + 'px';
+      circle.style.left = (e.clientX - rect.left - size/2) + 'px';
+      circle.style.top = (e.clientY - rect.top - size/2) + 'px';
+      btn.appendChild(circle);
+      setTimeout(() => circle.remove(), 650);
+    });
+  });
+})();
+
+/* ---------- parallax orbs + hero grid on scroll ---------- */
+(function(){
+  const hero = document.getElementById('home');
+  const orbA = document.querySelector('.orb-a');
+  const orbB = document.querySelector('.orb-b');
+  if(!hero) return;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if(y < window.innerHeight * 1.3){
+      hero.style.backgroundPosition = `center ${-y * 0.15}px`;
+      if(orbA) orbA.style.transform = `translateY(${y * 0.12}px)`;
+      if(orbB) orbB.style.transform = `translateY(${-y * 0.1}px)`;
+    }
+  });
+})();
 </script>
 </body>
 </html>
