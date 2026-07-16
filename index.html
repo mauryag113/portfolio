@@ -171,7 +171,9 @@
   .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:78px; }
   .logo{
     font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--navy);
+    display:flex; align-items:center; gap:9px;
   }
+  .logo-mark{ width:22px; height:22px; color:var(--gold); flex-shrink:0; }
   .logo em{ font-style:italic; color:var(--gold); font-weight:400; }
 
   .nav-links{ display:flex; align-items:center; gap:38px; }
@@ -358,6 +360,7 @@
     display:flex; align-items:center; justify-content:center; margin-bottom:20px;
     font-size:1.8rem; transition:transform 0.4s ease;
   }
+  .domain-icon svg{ width:26px; height:26px; color:var(--gold); }
   .domain-card:hover .domain-icon{ transform:scale(1.15) rotate(8deg); }
   .domain-card h3{
     font-size:1.25rem; margin-bottom:12px; color:var(--navy);
@@ -397,7 +400,12 @@
     .impact-stat:nth-child(-n+2){ border-top:none; }
   }
 
-  .about-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:64px; }
+  #about{ overflow:hidden; }
+  .about-watermark{
+    position:absolute; top:50%; right:-60px; transform:translateY(-50%);
+    width:420px; height:420px; opacity:.05; pointer-events:none; z-index:0;
+  }
+  .about-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:64px; position:relative; z-index:1; }
   .about-text p{ color:var(--ink-muted); font-size:1.04rem; max-width:64ch; }
   .about-text p + p{ margin-top:16px; }
   .edu-list li{ padding:20px 0; border-bottom:1px solid var(--line); }
@@ -406,6 +414,27 @@
   .edu-list .deg{ font-weight:600; font-size:1rem; margin-bottom:5px; color:var(--ink); font-family:var(--font-body); }
   .edu-list .meta{ font-family:var(--font-mono); font-size:.74rem; letter-spacing:.03em; color:var(--ink-dim); text-transform:uppercase; }
   .col-h{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+
+  /* ============ NEURAL NET BAND ============ */
+  .net-band{
+    background:var(--navy); position:relative; overflow:hidden; padding:64px 0;
+    border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .net-band-inner{ display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:center; }
+  .net-copy .eyebrow{ color:var(--gold-soft); }
+  .net-copy .eyebrow .rule{ background:rgba(255,255,255,.18); }
+  .net-copy h3{ color:#fff; font-size:clamp(1.4rem, 2.2vw, 1.9rem); font-weight:500; margin-bottom:14px; line-height:1.3; }
+  .net-copy p{ color:rgba(255,255,255,.62); font-size:.98rem; max-width:46ch; }
+  .net-canvas-wrap{ position:relative; height:280px; border-radius:var(--radius); overflow:hidden; background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.08); }
+  #net-canvas{ width:100%; height:100%; display:block; }
+  .net-canvas-tag{
+    position:absolute; top:14px; left:16px; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.06em;
+    text-transform:uppercase; color:rgba(255,255,255,.4);
+  }
+  @media (max-width:980px){
+    .net-band-inner{ grid-template-columns:1fr; }
+    .net-canvas-wrap{ height:220px; }
+  }
 
   /* ============ SKILLS ============ */
   .skills-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
@@ -432,6 +461,11 @@
     font-family:var(--font-mono); font-size:.68rem; letter-spacing:.05em; color:var(--ink-dim);
     display:block; margin-bottom:14px;
   }
+  .skill-icon{
+    width:34px; height:34px; border-radius:9px; background:var(--bg-alt); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+  }
+  .skill-icon svg{ width:18px; height:18px; }
   .skill-card h3{ font-size:1.02rem; margin-bottom:18px; color:var(--navy); font-weight:600; font-family:var(--font-body); }
   .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
   .tag{
@@ -569,10 +603,15 @@
   .log-line:nth-child(6){ transition-delay:.25s; }
   .log-line:nth-child(7){ transition-delay:.3s; }
   .log-line{
-    display:grid; grid-template-columns:160px 1fr; gap:24px; align-items:baseline;
+    display:grid; grid-template-columns:40px 160px 1fr; gap:18px; align-items:center;
     padding:20px 14px; margin:0 -14px; border-bottom:1px solid var(--line); border-radius:6px;
     transition:background .25s ease, padding-left .25s ease;
   }
+  .log-icon{
+    width:38px; height:38px; border-radius:8px; background:var(--bg-alt); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .log-icon svg{ width:18px; height:18px; }
   .log-line:hover{ background:var(--bg-alt); }
   .log-time{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; color:var(--gold); }
   .log-msg{ font-size:.98rem; color:var(--ink); }
@@ -614,6 +653,9 @@
   .gcard:hover .cap{ border-color:var(--line-strong); }
   .gcard .cap::after{ content:'↗'; color:var(--gold); opacity:0; transform:translate(-3px,3px); transition:.25s ease; flex-shrink:0; }
   .gcard:hover .cap::after{ opacity:1; transform:translate(0,0); }
+
+  .circuit-divider{ width:100%; height:34px; display:block; color:var(--line-strong); }
+  .circuit-divider .node{ fill:var(--gold-soft); }
 
   /* ============ CONTACT ============ */
   .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; }
@@ -790,7 +832,9 @@
     .skills-grid{ grid-template-columns:1fr; }
     .gallery-grid{ grid-template-columns:1fr; }
     .dash-stats{ flex-wrap:wrap; gap:18px; }
-    .log-line{ grid-template-columns:1fr; gap:6px; }
+    .log-line{ grid-template-columns:36px 1fr; gap:6px 14px; }
+    .log-line .log-time{ grid-column:2; }
+    .log-line .log-msg{ grid-column:2; }
     .proj-card.featured{ padding:26px; }
     .proj-card.featured::after{ position:static; display:block; margin-bottom:10px; }
     .proj-card.featured .proj-top h3{ max-width:100%; }
@@ -807,7 +851,7 @@
 <!-- ============ NAV ============ -->
 <nav class="nav">
   <div class="wrap nav-inner">
-    <div class="logo">Sachin <em>Maurya</em></div>
+    <div class="logo"><svg class="logo-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M6.7 7.2L10.3 11M6.7 16.8L10.3 13M13.7 11L17.3 7.2M13.7 13L17.3 16.8"/></svg>Sachin <em>Maurya</em></div>
     <div class="nav-links">
       <a href="#home">Home</a>
       <a href="#about">About</a>
@@ -918,6 +962,12 @@
   <div class="wrap">
     <div class="eyebrow"><span class="idx">01</span> About<span class="rule"></span></div>
     <h2 class="section-title">Profile</h2>
+    <svg class="about-watermark" viewBox="0 0 200 200" fill="none" stroke="#16233F" stroke-width="1">
+      <circle cx="40" cy="40" r="5"/><circle cx="40" cy="100" r="5"/><circle cx="40" cy="160" r="5"/>
+      <circle cx="100" cy="65" r="5"/><circle cx="100" cy="135" r="5"/>
+      <circle cx="160" cy="40" r="5"/><circle cx="160" cy="100" r="5"/><circle cx="160" cy="160" r="5"/>
+      <path d="M40 40L100 65M40 100L100 65M40 100L100 135M40 160L100 135M100 65L160 40M100 65L160 100M100 135L160 100M100 135L160 160"/>
+    </svg>
     <div class="about-grid">
       <div class="about-text" data-reveal>
         <p>B.Tech (Hons) CSE (AI) student with a proven track record of building high-impact AI/ML solutions across multiple critical sectors. I specialize in turning domain-specific challenges into production-ready intelligent systems.</p>
@@ -957,20 +1007,35 @@
     <h2 class="section-title">Where I Apply AI/ML</h2>
     <div class="domains-grid">
       <div class="domain-card" data-reveal>
-        <div class="domain-icon">🩺</div>
+        <div class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h3"/><circle cx="19" cy="12" r="2"/></svg></div>
         <h3>Medical Imaging & Diagnostics</h3>
         <p>Built CNN and YOLO models for brain tumor detection (99.5% acc), breast cancer classification, tooth abnormality detection, bone fracture identification, and multimodal analysis of X-Ray, CT, and Ultrasound scans. Integrated explainable AI for clinical trust.</p>
       </div>
       <div class="domain-card" data-reveal>
-        <div class="domain-icon">⚙️</div>
+        <div class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4.2"/></svg></div>
         <h3>Mechanical & Industrial Systems</h3>
         <p>Developed predictive maintenance systems for centrifugal pumps using vibration (Tri-axial), Temperature, and Hydro-sensors. Applied FFT, Random Forest, XGBoost, and LSTM for anomaly detection and Remaining Useful Life (RUL) estimation — powering digital twins for defense applications.</p>
       </div>
       <div class="domain-card" data-reveal>
-        <div class="domain-icon">🔒</div>
+        <div class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l7.5 3.2v5.4c0 4.8-3.1 8.9-7.5 10.4-4.4-1.5-7.5-5.6-7.5-10.4V5.7z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.3 11v-1.7a1.7 1.7 0 0 1 3.4 0V11"/></svg></div>
         <h3>Cybersecurity & Compliance</h3>
         <p>Currently building Cyforte.ai — Integrating Lansweeper, ManageEngine, Flexera, Fortonix, and Ansible into a unified CIS Controls compliance platform. Leveraging AI for automated vulnerability detection, asset intelligence, and security orchestration.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEURAL NET BAND ============ -->
+<section class="net-band">
+  <div class="wrap net-band-inner">
+    <div class="net-copy" data-reveal="left">
+      <div class="eyebrow">Fig. 02 <span class="rule"></span></div>
+      <h3>One architecture, three domains.</h3>
+      <p>Whether it's a pixel in a CT scan, a vibration reading from a pump, or a log line from a firewall — the same layered pattern-recognition core adapts to detect the signal in the noise.</p>
+    </div>
+    <div class="net-canvas-wrap" data-reveal="right">
+      <span class="net-canvas-tag">Live · forward pass simulation</span>
+      <canvas id="net-canvas"></canvas>
     </div>
   </div>
 </section>
@@ -984,6 +1049,7 @@
 
       <div class="skill-card" data-reveal>
         <span class="sk-num">[ 01 ]</span>
+        <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/></svg></div>
         <h3>Programming & Libraries</h3>
         <div class="tag-row">
           <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Pandas</span>
@@ -994,6 +1060,7 @@
 
       <div class="skill-card" data-reveal>
         <span class="sk-num">[ 02 ]</span>
+        <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="9" r="2"/><circle cx="19" cy="15" r="2"/><path d="M6.7 7L10.3 11M6.7 17L10.3 13M13.7 11L17.3 9.5M13.7 13L17.3 14.5"/></svg></div>
         <h3>AI/ML Core Concepts</h3>
         <div class="tag-row">
           <span class="tag">Statistics</span><span class="tag">Data Structures</span><span class="tag">SVM</span>
@@ -1004,6 +1071,7 @@
 
       <div class="skill-card" data-reveal>
         <span class="sk-num">[ 03 ]</span>
+        <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v.2A2.8 2.8 0 0 0 4 9v.6A2.4 2.4 0 0 0 3 11.6v.8A2.4 2.4 0 0 0 4 14.4V15a2.8 2.8 0 0 0 2 2.8V18a3 3 0 0 0 3 3"/><path d="M15 3a3 3 0 0 1 3 3v.2A2.8 2.8 0 0 1 20 9v.6A2.4 2.4 0 0 1 21 11.6v.8A2.4 2.4 0 0 1 20 14.4V15a2.8 2.8 0 0 1-2 2.8V18a3 3 0 0 1-3 3"/><path d="M9 7v10M15 7v10M9 12h6"/></svg></div>
         <h3>Advanced AI Technologies</h3>
         <div class="tag-row">
           <span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">Prompt Engineering</span>
@@ -1013,6 +1081,7 @@
 
       <div class="skill-card" data-reveal>
         <span class="sk-num">[ 04 ]</span>
+        <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
         <h3>Data Handling & Processing</h3>
         <div class="tag-row">
           <span class="tag">Data Cleaning</span><span class="tag">EDA</span><span class="tag">Feature Engineering</span>
@@ -1022,6 +1091,7 @@
 
       <div class="skill-card" data-reveal>
         <span class="sk-num">[ 05 ]</span>
+        <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2z"/></svg></div>
         <h3>Tools & Platforms</h3>
         <div class="tag-row">
           <span class="tag">Google Colab</span><span class="tag">Git</span><span class="tag">MATLAB</span>
@@ -1031,6 +1101,7 @@
 
       <div class="skill-card" data-reveal>
         <span class="sk-num">[ 06 ]</span>
+        <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.4-1.7A4.5 4.5 0 0 0 6.5 19h11z"/></svg></div>
         <h3>Cloud & Deployment</h3>
         <div class="tag-row">
           <span class="tag">Firebase</span><span class="tag">AWS S3/EC2</span><span class="tag">Docker </span>
@@ -1092,6 +1163,13 @@
   </div>
 </section>
 
+<svg class="circuit-divider" viewBox="0 0 1180 34" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0 17H420M420 17l20-10h60l20 10M760 17h420"/>
+  <circle class="node" cx="500" cy="7" r="3"/>
+  <circle class="node" cx="590" cy="7" r="3"/>
+  <circle class="node" cx="590" cy="17" r="2.5"/>
+</svg>
+
 <!-- ============ PROJECTS ============ -->
 <section id="projects" class="section-alt hairline">
   <div class="wrap">
@@ -1145,14 +1223,20 @@
     <div class="eyebrow"><span class="idx">06</span> Recognition<span class="rule"></span></div>
     <h2 class="section-title">Achievements & Certifications</h2>
     <div class="log">
-      <div class="log-line" data-reveal><span class="log-time">Recognition</span><span class="log-msg">Letters of Recommendation from two professors at <b>IIT Roorkee</b>.</span></div>
-      <div class="log-line" data-reveal><span class="log-time">HackerRank</span><span class="log-msg">5★ in <b>Python</b> and 4★ in <b>SQL</b> on HackerRank.</span></div>
-      <div class="log-line" data-reveal><span class="log-time">Certification</span><span class="log-msg">Python for Data Science — <b>IBM SkillsBuild</b>.</span></div>
-      <div class="log-line" data-reveal><span class="log-time">Certification</span><span class="log-msg">Machine Learning with AI — <b>Internshala & NSDC</b>.</span></div>
-      <div class="log-line" data-reveal><span class="log-time">Certification</span><span class="log-msg">Build Classical Machine Learning Models — <b>Microsoft Learn</b>.</span></div>
+      <div class="log-line" data-reveal><span class="log-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M9 12.5L7 21l5-3 5 3-2-8.5"/></svg></span><span class="log-time">Recognition</span><span class="log-msg">Letters of Recommendation from two professors at <b>IIT Roorkee</b>.</span></div>
+      <div class="log-line" data-reveal><span class="log-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.6 5.6 6 .8-4.4 4.3 1 6.1L12 16.4 6.8 19.3l1-6.1L3.4 8.9l6-.8z"/></svg></span><span class="log-time">HackerRank</span><span class="log-msg">5★ in <b>Python</b> and 4★ in <b>SQL</b> on HackerRank.</span></div>
+      <div class="log-line" data-reveal><span class="log-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="log-time">Certification</span><span class="log-msg">Python for Data Science — <b>IBM SkillsBuild</b>.</span></div>
+      <div class="log-line" data-reveal><span class="log-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="log-time">Certification</span><span class="log-msg">Machine Learning with AI — <b>Internshala & NSDC</b>.</span></div>
+      <div class="log-line" data-reveal><span class="log-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="log-time">Certification</span><span class="log-msg">Build Classical Machine Learning Models — <b>Microsoft Learn</b>.</span></div>
     </div>
   </div>
 </section>
+
+<svg class="circuit-divider" viewBox="0 0 1180 34" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0 17H460M460 17l20 10h240l20-10M780 17h400"/>
+  <circle class="node" cx="540" cy="27" r="3"/>
+  <circle class="node" cx="680" cy="27" r="3"/>
+</svg>
 
 <!-- ============ GALLERY ============ -->
 <section id="gallery" class="section-alt hairline">
@@ -1479,6 +1563,103 @@ tick();
     setInterval(step, 90);
   } else {
     for(let i=0;i<totalEpochs;i++) step();
+  }
+})();
+
+/* ---------- neural network visual ---------- */
+(function(){
+  const canvas = document.getElementById('net-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const wrap = canvas.parentElement;
+  const layers = [3, 5, 6, 4, 2];
+  let nodes = [];
+  let pulses = [];
+  let W = 0, H = 0;
+
+  function layout(){
+    const rect = wrap.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * devicePixelRatio;
+    canvas.height = H * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+
+    nodes = layers.map((count, li) => {
+      const x = (W / (layers.length + 1)) * (li + 1);
+      const arr = [];
+      for(let i=0;i<count;i++){
+        const y = (H / (count + 1)) * (i + 1);
+        arr.push({ x, y, r: 4.5 });
+      }
+      return arr;
+    });
+  }
+
+  function spawnPulse(){
+    const startLayer = 0;
+    const from = nodes[startLayer][Math.floor(Math.random()*nodes[startLayer].length)];
+    const to = nodes[1][Math.floor(Math.random()*nodes[1].length)];
+    pulses.push({ layer:0, from, to, t:0 });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // connections
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    for(let l=0; l<nodes.length-1; l++){
+      nodes[l].forEach(a => {
+        nodes[l+1].forEach(b => {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        });
+      });
+    }
+
+    // nodes
+    nodes.forEach(layer => {
+      layer.forEach(n => {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(176,139,69,0.85)';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r+3, 0, Math.PI*2);
+        ctx.strokeStyle = 'rgba(176,139,69,0.25)';
+        ctx.stroke();
+      });
+    });
+
+    // pulses travel layer to layer
+    pulses.forEach(p => {
+      p.t += 0.022;
+      const x = p.from.x + (p.to.x - p.from.x) * p.t;
+      const y = p.from.y + (p.to.y - p.from.y) * p.t;
+      ctx.beginPath();
+      ctx.arc(x, y, 2.6, 0, Math.PI*2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+
+      if(p.t >= 1 && p.layer < nodes.length - 2){
+        const nextLayer = p.layer + 1;
+        const nextTo = nodes[nextLayer+1][Math.floor(Math.random()*nodes[nextLayer+1].length)];
+        pulses.push({ layer: nextLayer, from: p.to, to: nextTo, t: 0 });
+      }
+    });
+    pulses = pulses.filter(p => p.t < 1);
+  }
+
+  layout();
+  window.addEventListener('resize', layout);
+
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    draw();
+  } else {
+    setInterval(spawnPulse, 550);
+    setInterval(draw, 40);
   }
 })();
 
