@@ -590,13 +590,21 @@
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
     overflow:hidden; transition:box-shadow .3s ease, transform .3s cubic-bezier(.2,.7,.3,1), border-color .3s ease;
   }
+  .gcard{ cursor:pointer; }
   .gcard:hover{ transform:translateY(-5px); border-color:var(--line-strong); box-shadow:0 22px 42px -24px rgba(22,35,63,.26); }
   .gcard .thumb{
     position:relative; width:100%; height:190px; overflow:hidden;
     background:var(--bg-alt); display:flex; align-items:center; justify-content:center;
   }
-  .gcard .thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .5s cubic-bezier(.2,.7,.3,1); }
+  .gcard .thumb img{ width:100%; height:100%; object-fit:contain; object-position:center; padding:10px; transition:transform .5s cubic-bezier(.2,.7,.3,1); }
   .gcard:hover .thumb img{ transform:scale(1.06); }
+  .gcard .thumb::after{
+    content:'⤢'; position:absolute; top:10px; right:10px; width:30px; height:30px; border-radius:7px;
+    background:rgba(255,255,255,.9); border:1px solid var(--line-strong); color:var(--navy);
+    display:flex; align-items:center; justify-content:center; font-size:.9rem;
+    opacity:0; transform:translateY(-6px); transition:opacity .25s ease, transform .25s ease;
+  }
+  .gcard:hover .thumb::after{ opacity:1; transform:translateY(0); }
   .gcard .thumb .ph{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-dim); text-align:center; padding:0 16px; }
   .gcard .cap{
     display:flex; align-items:center; justify-content:space-between; gap:10px;
@@ -702,6 +710,55 @@
   /* ---- parallax layers ---- */
   .hero{ will-change:background-position; }
   .orb{ will-change:transform; }
+
+  /* ============ LIGHTBOX ============ */
+  .lightbox{
+    position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
+    background:rgba(16,20,28,0); padding:24px;
+    visibility:hidden; opacity:0;
+    transition:opacity .35s ease, background .35s ease, visibility .35s ease;
+  }
+  .lightbox.open{ visibility:visible; opacity:1; background:rgba(16,20,28,.82); }
+  .lightbox-inner{
+    position:relative; width:75vw; height:75vh; max-width:1100px;
+    background:var(--surface); border-radius:12px; overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.6);
+    display:flex; flex-direction:column;
+    transform:scale(.9) translateY(16px); opacity:0;
+    transition:transform .4s cubic-bezier(.16,.84,.44,1), opacity .4s ease;
+  }
+  .lightbox.open .lightbox-inner{ transform:scale(1) translateY(0); opacity:1; }
+  .lightbox-media{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    background:var(--bg-alt); overflow:hidden; padding:20px;
+  }
+  .lightbox-media img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:4px; }
+  .lightbox-cap{
+    padding:16px 22px; border-top:1px solid var(--line); background:var(--surface);
+    font-family:var(--font-mono); font-size:.82rem; letter-spacing:.03em; color:var(--ink-muted);
+  }
+  .lightbox-close{
+    position:absolute; top:16px; right:16px; width:40px; height:40px; border-radius:50%;
+    background:rgba(255,255,255,.92); border:1px solid var(--line-strong); color:var(--navy);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem;
+    transition:transform .2s ease, background .2s ease; z-index:2;
+  }
+  .lightbox-close:hover{ transform:rotate(90deg); background:#fff; }
+  .lightbox-nav{
+    position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%;
+    background:rgba(255,255,255,.92); border:1px solid var(--line-strong); color:var(--navy);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .lightbox-nav:hover{ background:#fff; }
+  .lightbox-nav.prev{ left:16px; }
+  .lightbox-nav.next{ right:16px; }
+  .lightbox-nav:hover.prev{ transform:translateY(-50%) translateX(-3px); }
+  .lightbox-nav:hover.next{ transform:translateY(-50%) translateX(3px); }
+  @media (max-width:768px){
+    .lightbox-inner{ width:92vw; height:80vh; }
+    .lightbox-nav{ width:38px; height:38px; }
+  }
 
   /* ============ FOOTER ============ */
   footer{ border-top:1px solid var(--line); padding:36px 0; }
@@ -1183,6 +1240,17 @@
   </div>
 </section>
 
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox-inner" role="dialog" aria-modal="true" aria-label="Certificate preview">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close preview">✕</button>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous certificate">‹</button>
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Next certificate">›</button>
+    <div class="lightbox-media"><img id="lightboxImg" src="" alt=""></div>
+    <div class="lightbox-cap" id="lightboxCap"></div>
+  </div>
+</div>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
@@ -1538,7 +1606,56 @@ if(form){
   });
 }
 
-/* ---------- nav scroll shrink ---------- */
+/* ---------- gallery lightbox ---------- */
+(function(){
+  const cards = Array.from(document.querySelectorAll('.gcard'));
+  if(!cards.length) return;
+
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCap = document.getElementById('lightboxCap');
+  const lbClose = document.getElementById('lightboxClose');
+  const lbPrev = document.getElementById('lightboxPrev');
+  const lbNext = document.getElementById('lightboxNext');
+  let currentIndex = 0;
+
+  function itemFor(card){
+    const img = card.querySelector('.thumb img');
+    const cap = card.querySelector('.cap');
+    return { src: img ? img.getAttribute('src') : '', alt: img ? img.getAttribute('alt') : '', caption: cap ? cap.textContent.trim() : '' };
+  }
+
+  function openAt(index){
+    currentIndex = (index + cards.length) % cards.length;
+    const data = itemFor(cards[currentIndex]);
+    lbImg.setAttribute('src', data.src);
+    lbImg.setAttribute('alt', data.alt);
+    lbCap.textContent = data.caption;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => openAt(i));
+  });
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => openAt(currentIndex - 1));
+  lbNext.addEventListener('click', () => openAt(currentIndex + 1));
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowLeft') openAt(currentIndex - 1);
+    if(e.key === 'ArrowRight') openAt(currentIndex + 1);
+  });
+})();
 (function(){
   const nav = document.querySelector('.nav');
   if(!nav) return;
