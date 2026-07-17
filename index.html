@@ -119,6 +119,12 @@
     transition:opacity .4s ease;
   }
 
+  /* ============ HERO PARTICLE / SIGNAL NETWORK ============ */
+  #hero-particles{
+    position:absolute; inset:0; z-index:0; width:100%; height:100%;
+    display:block; pointer-events:none; opacity:.85;
+  }
+
   /* ============ FLOATING ORBS (hero ambience) ============ */
   .orb{
     position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0;
@@ -364,6 +370,23 @@
   .domain-card:hover .domain-icon{ transform:scale(1.15) rotate(8deg); }
   .domain-card h3{
     font-size:1.25rem; margin-bottom:12px; color:var(--navy);
+  }
+  .domain-visual{
+    position:relative; margin-top:20px; height:92px; border-radius:8px;
+    background:var(--navy); overflow:hidden; border:1px solid rgba(255,255,255,.06);
+  }
+  .domain-visual canvas{ display:block; width:100%; height:100%; }
+  .domain-visual .dv-tag{
+    position:absolute; top:8px; left:10px; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.45); z-index:2;
+    display:flex; align-items:center; gap:5px;
+  }
+  .domain-visual .dv-tag .rec-dot{
+    width:5px; height:5px; border-radius:50%; background:var(--gold-soft); position:relative;
+  }
+  .domain-visual .dv-tag .rec-dot::after{
+    content:''; position:absolute; inset:-3px; border-radius:50%; border:1px solid var(--gold-soft);
+    animation:pulse-ring 1.8s ease-out infinite;
   }
 
   /* ============ IMPACT BAND ============ */
@@ -654,8 +677,23 @@
   .gcard .cap::after{ content:'↗'; color:var(--gold); opacity:0; transform:translate(-3px,3px); transition:.25s ease; flex-shrink:0; }
   .gcard:hover .cap::after{ opacity:1; transform:translate(0,0); }
 
-  .circuit-divider{ width:100%; height:34px; display:block; color:var(--line-strong); }
-  .circuit-divider .node{ fill:var(--gold-soft); }
+  .circuit-divider{ width:100%; height:34px; display:block; color:var(--line-strong); overflow:visible; }
+  .circuit-divider .node{ fill:var(--gold-soft); animation:nodePulse 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  .circuit-divider .node:nth-child(2){ animation-delay:.3s; }
+  .circuit-divider .node:nth-child(3){ animation-delay:.6s; }
+  .circuit-divider .node:nth-child(4){ animation-delay:.9s; }
+  @keyframes nodePulse{
+    0%,100%{ opacity:.55; transform:scale(1); }
+    50%{ opacity:1; transform:scale(1.5); }
+  }
+  .circuit-divider .trace-base{ stroke:var(--line-strong); }
+  .circuit-divider .trace-flow{
+    stroke:var(--gold-soft); stroke-width:1.4; fill:none;
+    stroke-dasharray:22 400; stroke-dashoffset:0;
+    animation:traceFlow 3.6s linear infinite;
+    filter:drop-shadow(0 0 3px rgba(176,139,69,.7));
+  }
+  @keyframes traceFlow{ to{ stroke-dashoffset:-422; } }
 
   /* ============ CONTACT ============ */
   .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; }
@@ -882,6 +920,7 @@
 
 <!-- ============ HERO ============ -->
 <section id="home" class="hero">
+  <canvas id="hero-particles"></canvas>
   <div class="orb orb-a"></div>
   <div class="orb orb-b"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
@@ -1010,16 +1049,28 @@
         <div class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h3"/><circle cx="19" cy="12" r="2"/></svg></div>
         <h3>Medical Imaging & Diagnostics</h3>
         <p>Built CNN and YOLO models for brain tumor detection (99.5% acc), breast cancer classification, tooth abnormality detection, bone fracture identification, and multimodal analysis of X-Ray, CT, and Ultrasound scans. Integrated explainable AI for clinical trust.</p>
+        <div class="domain-visual">
+          <span class="dv-tag"><span class="rec-dot"></span>Scan · detection</span>
+          <canvas class="dv-canvas" data-type="scan"></canvas>
+        </div>
       </div>
       <div class="domain-card" data-reveal>
         <div class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4.2"/></svg></div>
         <h3>Mechanical & Industrial Systems</h3>
         <p>Developed predictive maintenance systems for centrifugal pumps using vibration (Tri-axial), Temperature, and Hydro-sensors. Applied FFT, Random Forest, XGBoost, and LSTM for anomaly detection and Remaining Useful Life (RUL) estimation — powering digital twins for defense applications.</p>
+        <div class="domain-visual">
+          <span class="dv-tag"><span class="rec-dot"></span>Vibration · signal</span>
+          <canvas class="dv-canvas" data-type="wave"></canvas>
+        </div>
       </div>
       <div class="domain-card" data-reveal>
         <div class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l7.5 3.2v5.4c0 4.8-3.1 8.9-7.5 10.4-4.4-1.5-7.5-5.6-7.5-10.4V5.7z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.3 11v-1.7a1.7 1.7 0 0 1 3.4 0V11"/></svg></div>
         <h3>Cybersecurity & Compliance</h3>
         <p>Currently building Cyforte.ai — Integrating Lansweeper, ManageEngine, Flexera, Fortonix, and Ansible into a unified CIS Controls compliance platform. Leveraging AI for automated vulnerability detection, asset intelligence, and security orchestration.</p>
+        <div class="domain-visual">
+          <span class="dv-tag"><span class="rec-dot"></span>Log · stream</span>
+          <canvas class="dv-canvas" data-type="matrix"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -1164,7 +1215,8 @@
 </section>
 
 <svg class="circuit-divider" viewBox="0 0 1180 34" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="none" aria-hidden="true">
-  <path d="M0 17H420M420 17l20-10h60l20 10M760 17h420"/>
+  <path class="trace-base" d="M0 17H420M420 17l20-10h60l20 10M760 17h420"/>
+  <path class="trace-flow" d="M0 17H420M420 17l20-10h60l20 10M760 17h420"/>
   <circle class="node" cx="500" cy="7" r="3"/>
   <circle class="node" cx="590" cy="7" r="3"/>
   <circle class="node" cx="590" cy="17" r="2.5"/>
@@ -1233,7 +1285,8 @@
 </section>
 
 <svg class="circuit-divider" viewBox="0 0 1180 34" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="none" aria-hidden="true">
-  <path d="M0 17H460M460 17l20 10h240l20-10M780 17h400"/>
+  <path class="trace-base" d="M0 17H460M460 17l20 10h240l20-10M780 17h400"/>
+  <path class="trace-flow" d="M0 17H460M460 17l20 10h240l20-10M780 17h400"/>
   <circle class="node" cx="540" cy="27" r="3"/>
   <circle class="node" cx="680" cy="27" r="3"/>
 </svg>
@@ -1661,6 +1714,204 @@ tick();
     setInterval(spawnPulse, 550);
     setInterval(draw, 40);
   }
+})();
+
+/* ---------- hero ambient particle / signal network ---------- */
+(function(){
+  const canvas = document.getElementById('hero-particles');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const hero = document.getElementById('home');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W = 0, H = 0, pts = [];
+  const COUNT = 46;
+  const LINK_DIST = 130;
+
+  function resize(){
+    const rect = hero.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * devicePixelRatio;
+    canvas.height = H * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    pts = Array.from({length: COUNT}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.18, vy: (Math.random()-0.5)*0.18,
+      r: Math.random()*1.4 + 0.8
+    }));
+  }
+  window.addEventListener('resize', resize);
+
+  function step(){
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > W) p.vx *= -1;
+      if(p.y < 0 || p.y > H) p.vy *= -1;
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const a = pts[i], b = pts[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < LINK_DIST){
+          ctx.strokeStyle = `rgba(22,35,63,${(1 - dist/LINK_DIST) * 0.16})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(138,106,47,0.55)';
+      ctx.fill();
+    });
+  }
+
+  resize();
+  if(reduced){
+    draw();
+  } else {
+    (function loop(){ step(); draw(); requestAnimationFrame(loop); })();
+  }
+})();
+
+/* ---------- domain card live mini visuals (scan / waveform / matrix) ---------- */
+(function(){
+  const canvases = document.querySelectorAll('.dv-canvas');
+  if(!canvases.length) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  canvases.forEach(canvas => {
+    const type = canvas.dataset.type;
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0, t = 0;
+
+    function resize(){
+      const rect = canvas.getBoundingClientRect();
+      W = rect.width; H = rect.height;
+      canvas.width = W * devicePixelRatio;
+      canvas.height = H * devicePixelRatio;
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    }
+    window.addEventListener('resize', resize);
+
+    /* ---- MEDICAL: sweeping scan line + detection bounding box ---- */
+    function drawScan(){
+      ctx.clearRect(0,0,W,H);
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      for(let x=0; x<W; x+=14){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+      for(let y=0; y<H; y+=14){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+      const cycle = 2600;
+      const p = (t % cycle) / cycle;
+      const sy = p * H;
+      const grad = ctx.createLinearGradient(0, sy-18, 0, sy+2);
+      grad.addColorStop(0, 'rgba(176,139,69,0)');
+      grad.addColorStop(1, 'rgba(176,139,69,0.55)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, sy-18, W, 20);
+      ctx.strokeStyle = 'rgba(176,139,69,0.9)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(W, sy); ctx.stroke();
+
+      const bx = W*0.58, by = H*0.28, bw = W*0.34, bh = H*0.5;
+      const reveal = Math.min(1, Math.max(0, (p*cycle - 300) / 900));
+      if(reveal > 0){
+        ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+        ctx.lineWidth = 1.4;
+        const cl = 8;
+        function corner(cx,cy,dx,dy){
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + cl*dx, cy);
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx, cy + cl*dy);
+          ctx.stroke();
+        }
+        corner(bx, by, 1, 1);
+        corner(bx+bw, by, -1, 1);
+        corner(bx, by+bh, 1, -1);
+        corner(bx+bw, by+bh, -1, -1);
+        if(reveal > 0.9){
+          ctx.font = '600 9px "IBM Plex Mono", monospace';
+          ctx.fillStyle = 'rgba(176,139,69,0.95)';
+          ctx.fillText('ANOMALY 98.7%', bx, by - 6);
+        }
+      }
+    }
+
+    /* ---- MECHANICAL: oscilloscope vibration waveform ---- */
+    let waveHist = [];
+    function drawWave(){
+      ctx.clearRect(0,0,W,H);
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      for(let y=0; y<H; y+=10){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+      const mid = H/2;
+      const val = Math.sin(t*0.012)*0.5*Math.sin(t*0.003) + Math.sin(t*0.05)*0.18 + (Math.random()-0.5)*0.06;
+      waveHist.push(val);
+      if(waveHist.length > 140) waveHist.shift();
+
+      ctx.beginPath();
+      waveHist.forEach((v,i) => {
+        const x = (i/140)*W;
+        const y = mid - v * (H*0.42);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.strokeStyle = '#B08B45';
+      ctx.lineWidth = 1.4;
+      ctx.shadowColor = 'rgba(176,139,69,0.6)';
+      ctx.shadowBlur = 4;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.setLineDash([2,3]);
+      ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(W,mid); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    /* ---- CYBERSECURITY: hex/binary log stream ---- */
+    const chars = '01ABCDEF';
+    let cols = [];
+    function initMatrix(){
+      const colW = 9;
+      const n = Math.ceil(W / colW);
+      cols = Array.from({length:n}, (_,i) => ({ x: i*colW, y: Math.random()*-H, speed: 0.6 + Math.random()*0.9 }));
+    }
+    function drawMatrix(){
+      ctx.fillStyle = 'rgba(22,35,63,0.35)';
+      ctx.fillRect(0,0,W,H);
+      ctx.font = '10px "IBM Plex Mono", monospace';
+      cols.forEach(c => {
+        const ch = chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillStyle = Math.random() > 0.94 ? 'rgba(255,255,255,0.9)' : 'rgba(176,139,69,0.65)';
+        ctx.fillText(ch, c.x, c.y);
+        c.y += c.speed * 5;
+        if(c.y > H + 12) c.y = Math.random() * -40;
+      });
+    }
+
+    resize();
+    if(type === 'matrix') initMatrix();
+
+    function frame(){
+      t += 16;
+      if(type === 'scan') drawScan();
+      else if(type === 'wave') drawWave();
+      else if(type === 'matrix') drawMatrix();
+    }
+
+    if(reduced){
+      frame();
+    } else {
+      setInterval(frame, 45);
+    }
+  });
 })();
 
 /* ---------- preloader + hero entrance ---------- */
